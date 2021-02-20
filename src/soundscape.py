@@ -745,19 +745,6 @@ def rec_and_save():
 
 
 
-#### flask functions
-
-from flask import Flask
-app = Flask(__name__)
-
-
-@app.route('/')
-def hello():
-    return "Hello World!"
-
-
-
-
 
 
 
@@ -771,12 +758,8 @@ def hello():
 
 
 
-
+# %%
 if __name__ == "__main__":
-
-  # Flask app start
-  # app.run()
-
   # Using embedded configuration.
 
   print('Registra audio con microfono (m) o usare brano di prova (p)?')
@@ -829,41 +812,34 @@ if __name__ == "__main__":
   if (np.mean(vocals_rms) <= THRESHOLD) & (np.mean(bass_rms) <= THRESHOLD) & (np.mean(drums_rms) <= THRESHOLD):
     print('The track needs to have at least a singing voice or a bass line or a drum pattern!')
 
-
-
-
-
-
-
-
-  # # Setup the session.
-  # ddsp.spectral_ops.reset_crepe()
-  #
-  # # Compute features.
-  # audio_features = ddsp.training.metrics.compute_audio_features(vocals)
-  # audio_features['loudness_db'] = audio_features['loudness_db'].astype(np.float32)
-  # audio_features_mod = None
-  #
-  #
-  #
-  # TRIM = -15
-  #
-  # # %%
-  # #Choose the sound for vocals
-  #
-  # ''' DA FARE
-  # - Dare la possibilità all'utente di scegliere il soundscape. Sulla base di quello e
-  # delle energie dei segnali ad ogni traccia viene assegnato un modello e rispettivi
-  # parametri di loudness e pitch shift
-  #
-  # - Gestire i file dei modelli
-  # '''
-  #
-  # #model = 'BarcaTD 30K' #@param ['Anatra 10K', 'Anatra 20K', 'Anatra 30K Sbagliata', 'Anatra 30K', 'Anatra 40K', 'Motosega 10K', 'Lupo 30K', 'Barca 22K', 'Barca 30K', 'Barca 40K', 'Locomotiva 22K', 'Locomotiva 30K', 'Locomotiva 40K', 'Foca 20K', 'Foca 30K', 'Foca 40K', 'Rana 20K', 'Rana 30K', 'Mosca 8K', 'Mosca 12K', 'Mosca 20K', 'Mosca 30K', 'Gabbiano 20K', 'Gabbiano 30K', 'Gabbiano 40K', 'Treno 20K', 'Treno 30K', 'Treno 40K', 'Mucca 24K', 'Mucca 30K', 'Mucca 40K', 'BarcaTD 16K', 'BarcaTD 20K', 'BarcaTD 30K', 'BarcaTD 40K']
-  # #MODEL = model
-  #
-  # # Harmonic part
-  #
+  # %% 
+  # Setup the session.
+  ddsp.spectral_ops.reset_crepe()
+  
+  # Compute features.
+  audio_features = ddsp.training.metrics.compute_audio_features(vocals)
+  audio_features['loudness_db'] = audio_features['loudness_db'].astype(np.float32)
+  audio_features_mod = None
+  
+  TRIM = -15
+  
+  # %%
+  #Choose the sound for vocals
+  
+  ''' DA FARE
+  - Dare la possibilità all'utente di scegliere il soundscape. Sulla base di quello e
+  delle energie dei segnali ad ogni traccia viene assegnato un modello e rispettivi
+  parametri di loudness e pitch shift
+  
+  - Gestire i file dei modelli
+  '''
+  
+  #model = 'BarcaTD 30K' #@param ['Anatra 10K', 'Anatra 20K', 'Anatra 30K Sbagliata', 'Anatra 30K', 'Anatra 40K', 'Motosega 10K', 'Lupo 30K', 'Barca 22K', 'Barca 30K', 'Barca 40K', 'Locomotiva 22K', 'Locomotiva 30K', 'Locomotiva 40K', 'Foca 20K', 'Foca 30K', 'Foca 40K', 'Rana 20K', 'Rana 30K', 'Mosca 8K', 'Mosca 12K', 'Mosca 20K', 'Mosca 30K', 'Gabbiano 20K', 'Gabbiano 30K', 'Gabbiano 40K', 'Treno 20K', 'Treno 30K', 'Treno 40K', 'Mucca 24K', 'Mucca 30K', 'Mucca 40K', 'BarcaTD 16K', 'BarcaTD 20K', 'BarcaTD 30K', 'BarcaTD 40K']
+  #MODEL = model
+  
+  # Harmonic part
+  
+  # Funzione NON NECESSARIA (?)
   # def find_model_dir(dir_name):
   #   # Iterate through directories until model directory is found
   #   for root, dirs, filenames in os.walk(dir_name):
@@ -872,34 +848,35 @@ if __name__ == "__main__":
   #         model_dir = root
   #         break
   #   return model_dir
-  #
-  # ''' PER DOPO
-  # if model == 'Anatra 10K':
-  #   #FOLEY_PATH = '/content/drive/MyDrive/Prototipo_CPAC/Forest/Forest_foley/'
-  #   model_dir = find_model_dir('/content/drive/MyDrive/Soundscapes014/Anatra10K')
-  #   #BACKGROUND_PATH = '/content/drive/MyDrive/Prototipo_CPAC/Forest/Background/snow_forest.wav'
-  #   #mix = 0.9
-  #   #pitch_shift = 0
-  # '''
-  # model_dir = find_model_dir('Models\Anatra014 10K')
-  # gin_file = os.path.join(model_dir, 'operative_config-0.gin')
-  #
-  # '''
-  # # Load the dataset statistics.
-  # DATASET_STATS = None
-  # dataset_stats_file = os.path.join(model_dir, 'dataset_statistics.pkl')
-  # print(f'Loading dataset statistics from {dataset_stats_file}')
-  #
-  #
+  
+  # model_dir = find_model_dir('models/Anatra40K')
+
+  ''' PER DOPO
+  if model == 'Anatra 10K':
+    #FOLEY_PATH = '/content/drive/MyDrive/Prototipo_CPAC/Forest/Forest_foley/'
+    model_dir = find_model_dir('/content/drive/MyDrive/Soundscapes014/Anatra10K')
+    #BACKGROUND_PATH = '/content/drive/MyDrive/Prototipo_CPAC/Forest/Background/snow_forest.wav'
+    #mix = 0.9
+    #pitch_shift = 0
+  '''
+  model_dir = 'models/Anatra40K'
+  gin_file = os.path.join(model_dir, 'operative_config-0.gin')
+  
+  
+  # Load the dataset statistics.
+  DATASET_STATS = None
+  dataset_stats_file = os.path.join(model_dir, 'dataset_statistics.pkl')
+  print(f'Loading dataset statistics from {dataset_stats_file}')
+  
+  
   # try:
   #   if tf.io.gfile.exists(dataset_stats_file):
   #     with tf.io.gfile.GFile(dataset_stats_file, 'rb') as f:
   #       DATASET_STATS = pickle.load(f)
-  #
+        
   # except Exception as err:
   #   print('Loading dataset statistics from pickle failed: {}.'.format(err))
-  # '''
-  #
+  
   # # Parse gin config,
   # with gin.unlock_config():
   #   gin.parse_config_file(gin_file, skip_unknown=True)
@@ -1104,3 +1081,4 @@ if __name__ == "__main__":
   # print("Done!")
   #
   #
+# %%
