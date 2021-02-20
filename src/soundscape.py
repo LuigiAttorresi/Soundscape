@@ -745,6 +745,19 @@ def rec_and_save():
 
 
 
+#### flask functions
+
+from flask import Flask
+app = Flask(__name__)
+
+
+@app.route('/')
+def hello():
+    return "Hello World!"
+
+
+
+
 
 
 
@@ -760,6 +773,10 @@ def rec_and_save():
 
 
 if __name__ == "__main__":
+
+  # Flask app start
+  # app.run()
+
   # Using embedded configuration.
 
   print('Registra audio con microfono (m) o usare brano di prova (p)?')
