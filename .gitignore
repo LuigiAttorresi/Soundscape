@@ -1,3 +1,5 @@
 .DS_Store
 \soundscape-venv
 \.vscode
+\pretrained_models
+\output
