@@ -79,7 +79,7 @@ from scipy.io import wavfile
 
 from spleeter.separator import Separator
 
-
+from omnizart.drum import app as dapp
 
 print('Imports done!')
 
@@ -801,38 +801,42 @@ if __name__ == "__main__":
 
   THRESHOLD = 0.0001
 
-  if np.mean(vocals_rms) > THRESHOLD:
+  vocals_present = np.mean(vocals_rms) > THRESHOLD
+  bass_present = np.mean(bass_rms) > THRESHOLD
+  drums_present = np.mean(drums_rms) > THRESHOLD
+
+  if vocals_present:
     vocals = vocals[np.newaxis, :]
     print('The track contains vocals')
-  if np.mean(bass_rms) > THRESHOLD:
+  if bass_present:
     print('The track contains bass')
     bass = bass[np.newaxis, :]
-  if np.mean(drums_rms) > THRESHOLD:
+  if drums_present:
     print('The track contains drums')
-  if (np.mean(vocals_rms) <= THRESHOLD) & (np.mean(bass_rms) <= THRESHOLD) & (np.mean(drums_rms) <= THRESHOLD):
+  if (~vocals_present & ~bass_present & ~drums_present):
     print('The track needs to have at least a singing voice or a bass line or a drum pattern!')
 
-  # %% 
-  # Setup the session.
-  ddsp.spectral_ops.reset_crepe()
+  # # %% 
+  # # Setup the session.
+  # ddsp.spectral_ops.reset_crepe()
   
-  # Compute features.
-  audio_features = ddsp.training.metrics.compute_audio_features(vocals)
-  audio_features['loudness_db'] = audio_features['loudness_db'].astype(np.float32)
-  audio_features_mod = None
+  # # Compute features.
+  # audio_features = ddsp.training.metrics.compute_audio_features(vocals)
+  # audio_features['loudness_db'] = audio_features['loudness_db'].astype(np.float32)
+  # audio_features_mod = None
   
-  TRIM = -15
+  # TRIM = -15
   
-  # %%
-  #Choose the sound for vocals
+  # # %%
+  # #Choose the sound for vocals
   
-  ''' DA FARE
-  - Dare la possibilità all'utente di scegliere il soundscape. Sulla base di quello e
-  delle energie dei segnali ad ogni traccia viene assegnato un modello e rispettivi
-  parametri di loudness e pitch shift
+  # ''' DA FARE
+  # - Dare la possibilità all'utente di scegliere il soundscape. Sulla base di quello e
+  # delle energie dei segnali ad ogni traccia viene assegnato un modello e rispettivi
+  # parametri di loudness e pitch shift
   
-  - Gestire i file dei modelli
-  '''
+  # - Gestire i file dei modelli
+  # '''
   
   #model = 'BarcaTD 30K' #@param ['Anatra 10K', 'Anatra 20K', 'Anatra 30K Sbagliata', 'Anatra 30K', 'Anatra 40K', 'Motosega 10K', 'Lupo 30K', 'Barca 22K', 'Barca 30K', 'Barca 40K', 'Locomotiva 22K', 'Locomotiva 30K', 'Locomotiva 40K', 'Foca 20K', 'Foca 30K', 'Foca 40K', 'Rana 20K', 'Rana 30K', 'Mosca 8K', 'Mosca 12K', 'Mosca 20K', 'Mosca 30K', 'Gabbiano 20K', 'Gabbiano 30K', 'Gabbiano 40K', 'Treno 20K', 'Treno 30K', 'Treno 40K', 'Mucca 24K', 'Mucca 30K', 'Mucca 40K', 'BarcaTD 16K', 'BarcaTD 20K', 'BarcaTD 30K', 'BarcaTD 40K']
   #MODEL = model
@@ -851,22 +855,22 @@ if __name__ == "__main__":
   
   # model_dir = find_model_dir('models/Anatra40K')
 
-  ''' PER DOPO
-  if model == 'Anatra 10K':
-    #FOLEY_PATH = '/content/drive/MyDrive/Prototipo_CPAC/Forest/Forest_foley/'
-    model_dir = find_model_dir('/content/drive/MyDrive/Soundscapes014/Anatra10K')
-    #BACKGROUND_PATH = '/content/drive/MyDrive/Prototipo_CPAC/Forest/Background/snow_forest.wav'
-    #mix = 0.9
-    #pitch_shift = 0
-  '''
-  model_dir = 'models/Anatra40K'
-  gin_file = os.path.join(model_dir, 'operative_config-0.gin')
+  # ''' PER DOPO
+  # if model == 'Anatra 10K':
+  #   #FOLEY_PATH = '/content/drive/MyDrive/Prototipo_CPAC/Forest/Forest_foley/'
+  #   model_dir = find_model_dir('/content/drive/MyDrive/Soundscapes014/Anatra10K')
+  #   #BACKGROUND_PATH = '/content/drive/MyDrive/Prototipo_CPAC/Forest/Background/snow_forest.wav'
+  #   #mix = 0.9
+  #   #pitch_shift = 0
+  # '''
+  # model_dir = 'models/Anatra40K'
+  # gin_file = os.path.join(model_dir, 'operative_config-0.gin')
   
   
-  # Load the dataset statistics.
-  DATASET_STATS = None
-  dataset_stats_file = os.path.join(model_dir, 'dataset_statistics.pkl')
-  print(f'Loading dataset statistics from {dataset_stats_file}')
+  # # Load the dataset statistics.
+  # DATASET_STATS = None
+  # dataset_stats_file = os.path.join(model_dir, 'dataset_statistics.pkl')
+  # print(f'Loading dataset statistics from {dataset_stats_file}')
   
   
   # try:
@@ -1032,46 +1036,29 @@ if __name__ == "__main__":
   # # QUI SUCCEDE QUALCOSA; NON VA OLTRE
   # print("1")
   #
-  # # %%
-  # # Omnizart Transcribe and Resynthesize
-  # if np.mean(drums_rms) > THRESHOLD:
-  #
-  #   uploaded_audio = 'Stems\celeste/drums.wav'
-  #
-  #   mode = "drum"
-  #
-  #   from omnizart.drum import app as dapp
-  #
-  #   midi = dapp.transcribe(f"{uploaded_audio}", model_path=None)
-  #
-  #   #import scipy.io.wavfile as wave
-  #   from omnizart.remote import download_large_file_from_google_drive
-  #
-  #   print("2")
-  #
-  #   '''
-  #   SF2_FILE = "forest_temp.sf2"
-  #   if not os.path.exists(SF2_FILE):
-  #     print("Downloading soundfont...")
-  #     download_large_file_from_google_drive(
-  #         "1gMpSiDI46HtAe_RIyFx6dFD3d6KC2TDn",
-  #         save_name=SF2_FILE
-  #       )
-  #   '''
-  #
-  #   SF2_FILE = 'soundfont_prova.sf2'
-  #
-  #   out_name = f"{uploaded_audio}_synth.wav"
-  #   raw_wav = midi.fluidsynth(fs=44100, sf2_path=SF2_FILE)
-  #   print("3")
-  #
-  #   wave.write(out_name, 44100, raw_wav)
-  #   print("4")
-  #   soundscape_drum, sr = librosa.load(out_name, sr=16000)
-  #
-  # else:
-  #   print('No drums found!')
-  #
+  # %%
+  # Omnizart Transcribe and Resynthesize
+  if drums_present:
+  
+    uploaded_audio = 'output/celeste/drums.wav'
+    SF2_FILE = 'soundfonts/forest_soundfont.sf2'
+    mode = "drum"
+
+    print('Transcribing drums...')
+    midi = dapp.transcribe(f"{uploaded_audio}", model_path=None)
+    print('Drums transcribed!')
+
+    # print('Resynth drums...')
+    # out_name = f"{uploaded_audio}_synth.wav"
+    # raw_wav = midi.fluidsynth(fs=44100, sf2_path=SF2_FILE)
+    # wave.write(out_name, 44100, raw_wav)
+    # soundscape_drum, sr = librosa.load(out_name, sr=16000)
+    # print('Drums Resynthesized!')
+    
+
+  else:
+    print('No drums found!')
+  
   # # %%
   # # Final Mix
   #
