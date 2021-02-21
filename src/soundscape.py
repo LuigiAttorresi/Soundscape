@@ -701,8 +701,8 @@ if __name__ == "__main__":
   drums_present = np.mean(drums_rms) > THRESHOLD
 
   if vocals_present:
-    vocals = vocals[np.newaxis, :]
     print('The track contains vocals')
+    vocals = vocals[np.newaxis, :]
   if bass_present:
     print('The track contains bass')
     bass = bass[np.newaxis, :]
@@ -926,30 +926,28 @@ if __name__ == "__main__":
   #
   # print("0")
   #
-  # import scipy.io.wavfile as wave
   # wave.write('Generated_vocals.wav', 16000, audio_gen)
   # # QUI SUCCEDE QUALCOSA; NON VA OLTRE
   # print("1")
   #
   
-  # Omnizart Transcribe and Resynthesize
+  # Omnizart - Transcribe and Resynthesize drums:
   if drums_present:
   
-    SF2_FILE = 'soundfonts/forest_soundfont.sf2'
+    SF2_FILE = 'soundfonts/forest_soundfont.sf2' #TODO: implement selection
     mode = "drum"
     
     print('Transcribing drums...')
     midi = dapp.transcribe(stem_drums, model_path=None)
     print('Drums transcribed!')
 
-    # print('Resynth drums...')
-    # out_name = f"{uploaded_audio}_synth.wav"
-    # raw_wav = midi.fluidsynth(fs=44100, sf2_path=SF2_FILE)
-    # wave.write(out_name, 44100, raw_wav)
-    # soundscape_drum, sr = librosa.load(out_name, sr=16000)
-    # print('Drums Resynthesized!')
+    print('Resynth drums...')
+    out_name = f"resynth_{stem_drums}"
+    raw_wav = midi.fluidsynth(fs=44100, sf2_path=SF2_FILE)
+    wave.write(out_name, 44100, raw_wav)
+    soundscape_drum, sr = librosa.load(out_name, sr=16000)
+    print('Drums Resynthesized!')
     
-
   else:
     print('No drums found!')
   
@@ -958,7 +956,5 @@ if __name__ == "__main__":
   #
   # mix = audio_gen + soundscape_drum[0:np.shape(audio_gen)[1]]
   # wave.write('Final_mix', 44100, mix)
-  #
+  # #TODO: remove all generated files (?) 
   # print("Done!")
-  #
-  #

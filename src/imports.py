@@ -2,7 +2,6 @@
 ### IMPORTS ###
 ###############
 
-
 print('Starting imports...')
 
 import os
@@ -74,5 +73,7 @@ from scipy.io import wavfile
 from spleeter.separator import Separator
 
 from omnizart.drum import app as dapp
+
+import scipy.io.wavfile as wave
 
 print('Imports done!')
