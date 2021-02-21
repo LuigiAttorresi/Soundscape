@@ -712,15 +712,15 @@ if __name__ == "__main__":
     print('The track needs to have at least a singing voice or a bass line or a drum pattern!')
 
   # # %% 
-  # # Setup the session.
-  # ddsp.spectral_ops.reset_crepe()
+  # Setup the session.
+  ddsp.spectral_ops.reset_crepe()
   
   # # Compute features.
-  # audio_features = ddsp.training.metrics.compute_audio_features(vocals)
-  # audio_features['loudness_db'] = audio_features['loudness_db'].astype(np.float32)
-  # audio_features_mod = None
+  audio_features = ddsp.training.metrics.compute_audio_features(vocals)
+  audio_features['loudness_db'] = audio_features['loudness_db'].astype(np.float32)
+  audio_features_mod = None
   
-  # TRIM = -15
+  TRIM = -15
   
   # # %%
   # #Choose the sound for vocals
@@ -758,8 +758,9 @@ if __name__ == "__main__":
   #   #mix = 0.9
   #   #pitch_shift = 0
   # '''
-  # model_dir = 'models/Anatra40K'
-  # gin_file = os.path.join(model_dir, 'operative_config-0.gin')
+
+  model_dir = 'models/Anatra40K'
+  gin_file = os.path.join(model_dir, 'operative_config-0.gin')
   
   
   # # Load the dataset statistics.
@@ -776,87 +777,85 @@ if __name__ == "__main__":
   # except Exception as err:
   #   print('Loading dataset statistics from pickle failed: {}.'.format(err))
   
-  # # Parse gin config,
-  # with gin.unlock_config():
-  #   gin.parse_config_file(gin_file, skip_unknown=True)
-  #
-  # # Assumes only one checkpoint in the folder, 'ckpt-[iter]`.
-  # ckpt_files = [f for f in tf.io.gfile.listdir(model_dir) if 'ckpt' in f]
-  # ckpt_name = ckpt_files[0].split('.')[0]
-  # ckpt = os.path.join(model_dir, ckpt_name)
+  # Parse gin config,
+  with gin.unlock_config():
+    gin.parse_config_file(gin_file, skip_unknown=True)
+  
+  # Assumes only one checkpoint in the folder, 'ckpt-[iter]`.
+  ckpt_files = [f for f in tf.io.gfile.listdir(model_dir) if 'ckpt' in f]
+  ckpt_name = ckpt_files[0].split('.')[0]
+  ckpt = os.path.join(model_dir, ckpt_name)
   #
   # # Ensure dimensions and sampling rates are equal
-  # time_steps_train = gin.query_parameter('DefaultPreprocessor.time_steps')
-  # n_samples_train = gin.query_parameter('Additive.n_samples')
-  # hop_size = int(n_samples_train / time_steps_train)
+  time_steps_train = gin.query_parameter('DefaultPreprocessor.time_steps')
+  n_samples_train = gin.query_parameter('Additive.n_samples')
+  hop_size = int(n_samples_train / time_steps_train)
+  
+  time_steps = int(vocals.shape[1] / hop_size)
+  n_samples = time_steps * hop_size
+
+  
+  gin_params = [
+     'Additive.n_samples = {}'.format(n_samples),
+     'FilteredNoise.n_samples = {}'.format(n_samples),
+     'DefaultPreprocessor.time_steps = {}'.format(time_steps),
+     'oscillator_bank.use_angular_cumsum = True',  # Avoids cumsum accumulation errors.
+   ]
   #
-  # time_steps = int(vocals.shape[1] / hop_size)
-  # n_samples = time_steps * hop_size
-  #
-  #
-  # gin_params = [
-  #     'Additive.n_samples = {}'.format(n_samples),
-  #     'FilteredNoise.n_samples = {}'.format(n_samples),
-  #     'DefaultPreprocessor.time_steps = {}'.format(time_steps),
-  #     'oscillator_bank.use_angular_cumsum = True',  # Avoids cumsum accumulation errors.
-  # ]
-  #
-  # with gin.unlock_config():
-  #   gin.parse_config(gin_params)
-  #
-  #
-  # # Trim all input vectors to correct lengths
-  # for key in ['f0_hz', 'f0_confidence', 'loudness_db']:
-  #   audio_features[key] = audio_features[key][:time_steps]
-  # #audio_features['audio'] = audio_features['audio'][:, :n_samples]
+  with gin.unlock_config():
+    gin.parse_config(gin_params)
   #
   #
-  # # Set up the model just to predict audio given new conditioning
-  # model = ddsp.training.models.Autoencoder()
-  # model.restore(ckpt)
+  #Trim all input vectors to correct lengths
+  for key in ['f0_hz', 'f0_confidence', 'loudness_db']:
+   audio_features[key] = audio_features[key][:time_steps]
+   #audio_features['audio'] = audio_features['audio'][:, :n_samples]
+
+
+  # Set up the model just to predict audio given new conditioning
+  model = ddsp.training.models.Autoencoder()
+  model.restore(ckpt)
   #
   # # Build model by running a batch through it.
-  # _ = model(audio_features, training=False)
+  _ = model(audio_features, training=False)
   #
   #
   # # %%
   #
-  # # Resynthesize Vocals
+  # Resynthesize Vocals
   #
   #
-  # threshold = 1
+  threshold = 1
   #
-  # ADJUST = True
+  ADJUST = True
   #
-  # quiet = 20
+  quiet = 20
   #
-  # autotune = 0
+  autotune = 0
   #
-  # loudness_shift = 0
+  loudness_shift = 0
   #
-  # pitch_shift = 0
+  pitch_shift = 0
   #
   #
-  # audio_features_mod = {k: v.copy() for k, v in audio_features.items()}
+  audio_features_mod = {k: v.copy() for k, v in audio_features.items()}
   #
   #
   # ## Helper functions.
-  # def shift_ld(audio_features, ld_shift=0.0):
-  #   """Shift loudness by a number of ocatves."""
-  #   audio_features['loudness_db'] += ld_shift
-  #   return audio_features
+  def shift_ld(audio_features, ld_shift=0.0):
+   """Shift loudness by a number of ocatves."""
+   audio_features['loudness_db'] += ld_shift
+   return audio_features
   #
   #
-  # def shift_f0(audio_features, pitch_shift=0.0):
-  #   """Shift f0 by a number of ocatves."""
-  #   audio_features['f0_hz'] *= 2.0 ** (pitch_shift)
-  #   audio_features['f0_hz'] = np.clip(audio_features['f0_hz'],
-  #                                     0.0,
-  #                                     librosa.midi_to_hz(110.0))
-  #   return audio_features
+  def shift_f0(audio_features, pitch_shift=0.0):
+    """Shift f0 by a number of ocatves."""
+    audio_features['f0_hz'] *= 2.0 ** (pitch_shift)
+    audio_features['f0_hz'] = np.clip(audio_features['f0_hz'], 0.0, librosa.midi_to_hz(110.0))
+    return audio_features
   #
   #
-  # mask_on = None
+  mask_on = None
   #
   #
   # ''' PRIMA BISOGNA RISOLVERE PICKLE
@@ -909,14 +908,14 @@ if __name__ == "__main__":
   #
   #
   # # Manual Shifts.
-  # audio_features_mod = shift_ld(audio_features_mod, loudness_shift)
-  # audio_features_mod = shift_f0(audio_features_mod, pitch_shift)
+  audio_features_mod = shift_ld(audio_features_mod, loudness_shift)
+  audio_features_mod = shift_f0(audio_features_mod, pitch_shift)
   #
-  # af = audio_features if audio_features_mod is None else audio_features_mod
+  af = audio_features if audio_features_mod is None else audio_features_mod
   #
   # # Run a batch of predictions.
-  # outputs = model(af, training=False)
-  # audio_gen = model.get_audio_from_outputs(outputs)
+  outputs = model(af, training=False)
+  audio_gen = model.get_audio_from_outputs(outputs)
   #
   # ''' Per il background
   # if len(background) >= audio_gen.shape[-1]:
@@ -924,10 +923,22 @@ if __name__ == "__main__":
   #
   # '''
   #
-  # print("0")
   #
-  # import scipy.io.wavfile as wave
-  # wave.write('Generated_vocals.wav', 16000, audio_gen)
+  import scipy.io.wavfile as wave
+  
+  # If batched, take first element.
+  if len(audio_gen.shape) == 2:
+    audio_gen = audio_gen[0]
+
+  normalizer = float(np.iinfo(np.int16).max)
+  array_of_ints = np.array(
+      np.asarray(audio_gen) * normalizer, dtype=np.int16)
+  filename = "Generated_vocals.wav"
+  #memfile = io.BytesIO()  #???
+  wavfile.write(filename, DEFAULT_SAMPLE_RATE, array_of_ints)
+  #wave.write('Generated_vocals.wav', 16000, audio_gen)
+  
+
   # # QUI SUCCEDE QUALCOSA; NON VA OLTRE
   # print("1")
   #
