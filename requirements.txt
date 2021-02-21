@@ -78,6 +78,8 @@ ffmpeg==1.4
     # via -r requirements.in
 flask==1.1.2
     # via -r requirements.in
+fluidsynth==0.2
+    # via -r requirements.in
 future==0.18.2
     # via
     #   ddsp
@@ -294,7 +296,9 @@ pydub==0.24.1
     #   ddsp
     #   note-seq
 pyfluidsynth==1.3.0
-    # via omnizart
+    # via
+    #   -r requirements.in
+    #   omnizart
 pygments==2.8.0
     # via ipython
 pyparsing==2.4.7
@@ -413,7 +417,7 @@ termcolor==1.1.0
     # via
     #   tensorflow
     #   tfds-nightly
-tfds-nightly==4.2.0.dev202102200107
+tfds-nightly==4.2.0.dev202102210106
     # via ddsp
 threadpoolctl==2.1.0
     # via scikit-learn
