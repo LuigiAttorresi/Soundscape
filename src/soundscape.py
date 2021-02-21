@@ -1,100 +1,9 @@
 #%%
-###############
-### IMPORTS ###
-###############
+from imports import * 
 
-
-print('Starting imports...')
-
-
-import os
-import os.path
-#from IPython import display as dsp  #Togliere?
-
-
-import warnings
-warnings.filterwarnings("ignore")
-
-import copy
-#import time   #Togliere
-
-import crepe
-import ddsp
-import ddsp.training
-
-
-
-''' PER PYTHONANYWHERE
-!sudo apt-get install libportaudio2 #In pythonanywhere potrebbe non servire (bug sounddevice)
-!pip install sounddevice
-import sounddevice as sd
-from scipy.io.wavfile import write
-(servono a registrare e riprodurre)
-'''
-''' Per evitare gli import
-from ddsp.colab.colab_utils import (
-    play, record,
-    upload)
-
-from ddsp.colab import colab_utils
-
-from ddsp.colab.colab_utils import (
-    auto_tune, detect_notes, fit_quantile_transform,
-    get_tuning_factor, download, play, record,
-    specplot, upload, DEFAULT_SAMPLE_RATE)
-'''
-import gin
-#from google.colab import files
-import librosa
-#import matplotlib.pyplot as plt   #Togliere?
-import numpy as np
-import pickle
-import tensorflow.compat.v2 as tf
-import tensorflow_datasets as tfds
-
-# Helper Functions
-sample_rate = 16000
-
-#from IPython.display import Audio   #Togliere?
-from scipy.io.wavfile import write
-#import IPython.display as ipd     #Togliere?
-from pathlib import Path
-from random import randrange
-
-import argparse
-import tempfile
-import queue
-import sys
-
-import sounddevice as sd
-import soundfile as sf
-
-import base64
-import io
-
-from IPython import display #Serve per play
-import note_seq
-from scipy import stats
-from scipy.io import wavfile
-
-from spleeter.separator import Separator
-
-from omnizart.drum import app as dapp
-
-print('Imports done!')
-
-
-
-
-#%%
 #################
 ### FUNCTIONS ###
 #################
-
-
-
-
-
 
 #from google.colab import files
 
@@ -609,9 +518,6 @@ def auto_tune(f0_midi, tuning_factor, mask_on, amount=0.0, chromatic=False):
   # Adjust the midi signal.
   return f0_midi - amount * midi_diff
 
-
-
-#%%
 '''
 #Record or Upload Audio
 
@@ -628,7 +534,7 @@ else:
   audio = audios[0][-1]
 audio = audio[np.newaxis, :]
 '''
-# %%
+
 '''
 import pyaudio
 import wave
@@ -741,24 +647,14 @@ def rec_and_save():
 	    print('\nRecording finished: ' + repr(args.filename))
 	except Exception as e:
 	    parser.exit(type(e).__name__ + ': ' + str(e))
+      
+print('Initialization Done!')
 
-
-
-
-
-
-
+#%%
 ############
 ### MAIN ###
 ############
 
-
-
-
-
-
-
-# %%
 if __name__ == "__main__":
   # Using embedded configuration.
 
@@ -774,7 +670,6 @@ if __name__ == "__main__":
 
 
   selected_file = os.path.join(audio_folder, audio_file_name)
-
 
   separator = Separator('spleeter:4stems-16kHz')
   separator.separate_to_file(selected_file, 'output')
@@ -1036,16 +931,15 @@ if __name__ == "__main__":
   # # QUI SUCCEDE QUALCOSA; NON VA OLTRE
   # print("1")
   #
-  # %%
+  
   # Omnizart Transcribe and Resynthesize
   if drums_present:
   
-    uploaded_audio = 'output/celeste/drums.wav'
     SF2_FILE = 'soundfonts/forest_soundfont.sf2'
     mode = "drum"
-
+    
     print('Transcribing drums...')
-    midi = dapp.transcribe(f"{uploaded_audio}", model_path=None)
+    midi = dapp.transcribe(stem_drums, model_path=None)
     print('Drums transcribed!')
 
     # print('Resynth drums...')
@@ -1068,4 +962,3 @@ if __name__ == "__main__":
   # print("Done!")
   #
   #
-# %%
