@@ -942,7 +942,7 @@ if __name__ == "__main__":
     print('Drums transcribed!')
 
     print('Resynth drums...')
-    out_name = f"resynth_{stem_drums}"
+    out_name = 'resynth_drums.wav'
     raw_wav = midi.fluidsynth(fs=44100, sf2_path=SF2_FILE)
     wave.write(out_name, 44100, raw_wav)
     soundscape_drum, sr = librosa.load(out_name, sr=16000)

@@ -76,4 +76,5 @@ from omnizart.drum import app as dapp
 
 import scipy.io.wavfile as wave
 
+from ddsp.colab import colab_utils
 print('Imports done!')
