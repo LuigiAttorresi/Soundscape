@@ -92,13 +92,15 @@ if __name__ == "__main__":
   print('Registra audio con microfono (m) o usare brano di prova (p)?')
   input_type = input()
   audio_folder = os.path.join('audio')
-  audio_file_name = 'celeste.wav' #TODO: implement selection
+  audio_file_name = 'flyme.wav' #TODO: implement selection
 
   if(input_type == 'm'):
     rec_and_save()
     audio_file_name = 'recording.wav'
 
   selected_file = os.path.join(audio_folder, audio_file_name)
+
+  audio,sr = librosa.load(selected_file, sr=16000)
 
   separator = Separator('spleeter:4stems-16kHz')
   separator.separate_to_file(selected_file, 'output')
@@ -143,6 +145,7 @@ if __name__ == "__main__":
   
   # Compute features.
   print("Extracting features...")
+  start_time = time.time()
 
   if vocals_present:
     vocals_features = ddsp.training.metrics.compute_audio_features(vocals)
@@ -153,6 +156,8 @@ if __name__ == "__main__":
     bass_features = ddsp.training.metrics.compute_audio_features(bass)
     bass_features['loudness_db'] = bass_features['loudness_db'].astype(np.float32)
     bass_features_mod = None
+
+  print('Audio features took %.1f seconds' % (time.time() - start_time))
 
   # TRIM = -15
 
@@ -176,7 +181,11 @@ if __name__ == "__main__":
     bas_autotune = 0
     bass_loudness_shift = 0
     bass_pitch_shift = 0
+    # DRUMS 
+    # drums_dir
 
+    # BACKGROUND
+    background_dir = 'audio\celeste.wav'
         
   elif soundscape == 'Montagna':
     # VOCALS
@@ -494,8 +503,17 @@ if __name__ == "__main__":
   else:
     print('No drums found!')
   '''
-  # Final Mix
-  mix = new_vocals + new_bass  #soundscape_drum[0:np.shape(audio_gen)[1]]
+
+  '''
+  # BACKGROUND DA FINIRE
+  background, sr = librosa.load(background_dir, sr=16000)
+  if len(background) >= audio.shape[-1]:
+    background = background[0:vocals.shape[-1]]
+
+
+  
+  # FINAL MIX
+  mix = new_vocals + new_bass + 0.5 * other + 0.5*background #+ soundscape_drum[0:np.shape(audio_gen)[1]]
   if len(mix.shape) == 2:
       mix = mix[0]
 
@@ -504,10 +522,5 @@ if __name__ == "__main__":
       np.asarray(mix) * normalizer, dtype=np.int16)
   filename = "Soundscape.wav"
   wavfile.write(filename, DEFAULT_SAMPLE_RATE, array_of_ints)
-  
-  
   '''
-  # Background:
-  if len(background) >= audio_gen.shape[-1]:
-    background = background[0:audio_gen.shape[-1]]
-  '''
+ 
