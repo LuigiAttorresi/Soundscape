@@ -17,6 +17,8 @@ import copy
 import crepe
 import ddsp
 import ddsp.training
+from ddsp.colab import colab_utils
+from ddsp.colab.colab_utils import (auto_tune, detect_notes, fit_quantile_transform, get_tuning_factor, DEFAULT_SAMPLE_RATE)
 
 ''' PER PYTHONANYWHERE
 !sudo apt-get install libportaudio2 #In pythonanywhere potrebbe non servire (bug sounddevice)
@@ -47,7 +49,7 @@ import tensorflow.compat.v2 as tf
 import tensorflow_datasets as tfds
 
 # Helper Functions
-sample_rate = 16000
+sample_rate =  DEFAULT_SAMPLE_RATE
 
 #from IPython.display import Audio   #Togliere?
 from scipy.io.wavfile import write
