@@ -1,20 +1,20 @@
+{% extends 'base.html' %}
 
-<html>
-    <head>
-        <title>soundscape</title>
-    </head>
-    <body>
-        <p>Soundscappa</p>
-        <form action="{{ url_for('index') }}" method="post">
-            <label for="song">Choose a song or transform your own:</label>
-            <select id="songs" name="songs">
-                <option value="celeste.wav">Cleste - Stop This Train</option>
-                <option value="flyme.wav">Frank Sinatra - Fly Me To The Moon</option>
-                <option value="volare.wav">Maximo Cobos - Volare</option>
-                <option value="record">Record audio...</option>
-                <option value="load">Load file...</option>
-            </select>
-            <button type="submit">Start</button>
-        </form>
-    </body>
-</html>
+{% block head %}
+<title>Soundscape</title>
+{% endblock %}
+
+{% block body %}
+<p>Soundscappa</p>
+<form action="{{ url_for('index') }}" method="post">
+    <label for="audio">Choose a song or transform your own:</label>
+    <select id="options" name="options">
+        <option value="celeste.wav">Cleste - Stop This Train</option>
+        <option value="flyme.wav">Frank Sinatra - Fly Me To The Moon</option>
+        <option value="volare.wav">Maximo Cobos - Volare</option>
+        <option value="record">Record audio...</option>
+        <option value="load">Load file...</option>
+    </select>
+    <button type="submit">Start</button>
+</form>
+{% endblock %}
