@@ -49,7 +49,6 @@ def rec_and_save():
 	        print(status, file=sys.stderr)
 	    q.put(indata.copy())
 
-
 	try:
 	    if args.samplerate is None:
 	        device_info = sd.query_devices(args.device, 'input')
@@ -72,4 +71,3 @@ def rec_and_save():
 	    print('\nRecording finished: ' + repr(args.filename))
 	except Exception as e:
 	    parser.exit(type(e).__name__ + ': ' + str(e))
-      

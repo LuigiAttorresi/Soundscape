@@ -14,8 +14,6 @@ import librosa
 import feature_extraction
 from omnizart.drum import app as dapp
 
-
-
 sample_rate =  DEFAULT_SAMPLE_RATE
 ADJUST = True
 
@@ -24,8 +22,7 @@ def shift_ld(audio_features, ld_shift=0.0):
     """Shift loudness by a number of ocatves."""
     audio_features['loudness_db'] += ld_shift
     return audio_features
-    #
-    #
+
 def shift_f0(audio_features, pitch_shift=0.0):
   """Shift f0 by a number of ocatves."""
   audio_features['f0_hz'] *= 2.0 ** (pitch_shift)
@@ -41,7 +38,6 @@ def resynth(audio, audio_parameters):
     DATASET_STATS = None
     dataset_stats_file = os.path.join(audio_parameters["dir"], 'dataset_statistics.pkl')
     print(f'Loading dataset statistics from {dataset_stats_file}')
-
 
     try:
         if tf.io.gfile.exists(dataset_stats_file):
@@ -68,7 +64,6 @@ def resynth(audio, audio_parameters):
     time_steps = int(audio.shape[1] / hop_size)
     n_samples = time_steps * hop_size
 
-
     gin_params = [
         'Additive.n_samples = {}'.format(n_samples),
         'FilteredNoise.n_samples = {}'.format(n_samples),
@@ -84,7 +79,6 @@ def resynth(audio, audio_parameters):
         audio_features[key] = audio_features[key][:time_steps]
         #audio_features['audio'] = audio_features['audio'][:, :n_samples]
 
-
     # Set up the model just to predict audio given new conditioning
     model = ddsp.training.models.Autoencoder()
     model.restore(ckpt)
@@ -93,7 +87,6 @@ def resynth(audio, audio_parameters):
     _ = model(audio_features, training=False)
 
     # Resynthesize 
-
     audio_features_mod = {k: v.copy() for k, v in audio_features.items()}
 
     mask_on = None
@@ -112,7 +105,6 @@ def resynth(audio, audio_parameters):
             round_fn = np.floor if p_diff_octave > 1.5 else np.ceil
             p_diff_octave = round_fn(p_diff_octave)
             audio_features_mod = shift_f0(audio_features_mod, p_diff_octave)
-
 
             # Quantile shift the note_on parts.
             _, loudness_norm = colab_utils.fit_quantile_transform(audio_features['loudness_db'], mask_on, inv_quantile=DATASET_STATS['quantile_transform'])
@@ -139,7 +131,6 @@ def resynth(audio, audio_parameters):
     else:
         print('\nSkipping auto-adujst (box not checked or no dataset statistics found).')
 
-
     # Manual Shifts.
     audio_features_mod = shift_ld(audio_features_mod, audio_parameters["loudness_shift"])
     audio_features_mod = shift_f0(audio_features_mod, audio_parameters["pitch_shift"])
@@ -150,7 +141,7 @@ def resynth(audio, audio_parameters):
     outputs = model(af, training=False)
     new_audio = model.get_audio_from_outputs(outputs)
 
-    # Write new_audio into a file
+    # Write new_audio into a file.
     # If batched, take first element.
     if len(new_audio.shape) == 2:
         new_audio = new_audio[0]
@@ -161,12 +152,11 @@ def resynth(audio, audio_parameters):
     filename = "generated_" + audio_features["type"] + ".wav"
     wavfile.write(filename, DEFAULT_SAMPLE_RATE, array_of_ints)
 
-    return new_audio        #O array of ints??
-
+    return new_audio  # Or array_of_ints??
 
 def drum_resynth(drum_audio_path, soundfont_path):
-    # Omnizart Transcribe and Resynthesize
 
+    # Omnizart Transcribe and Resynthesize
     print('Transcribing drums...')
     midi = dapp.transcribe(drum_audio_path, model_path=None)
     print('Drums transcribed!')

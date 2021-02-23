@@ -4,7 +4,6 @@ import ddsp.training
 import separation
 import numpy as np
 
-
 # Setup the session.
 ddsp.spectral_ops.reset_crepe()
 
