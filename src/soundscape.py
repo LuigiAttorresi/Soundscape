@@ -1,9 +1,13 @@
+#http://127.0.0.1:5000/
+
 #from imports import * 
 import record 
 import resynthesis
 import separation
 import warnings
 warnings.filterwarnings("ignore")
+from flask import Flask, render_template, request
+
 
 vocal_parameters = {
   "type": 'vocals',
@@ -26,21 +30,22 @@ bass_parameters = {
 }
 
 
+app = Flask(__name__)
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    if request.method == "POST":
+       song = request.form.get('songs')
+       print(song)
+    return render_template('index.html')
+
+
 ############
 ### MAIN ###
 ############
 
 if __name__ == "__main__":
 
-  # Using embedded configuration.
-  print('Registra audio con microfono (m) o usare brano di prova (p)?')
-  input_type = input()
-  
-  audio_file_name = 'flyme.wav' #TODO: implement selection
-
-  if(input_type == 'm'):
-    record.rec_and_save()
-    audio_file_name = 'recording.wav'
+  app.run(debug=True)
 
 
  
