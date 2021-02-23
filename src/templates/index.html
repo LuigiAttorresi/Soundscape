@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block body %}
-<p>Soundscappa</p>
+<p id="title">Soundscappa</p>
 <form action="{{ url_for('index') }}" method="post">
     <label for="audio">Choose a song or transform your own:</label>
     <select id="options" name="options">
