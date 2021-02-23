@@ -1,6 +1,5 @@
-#http://127.0.0.1:5000/
+# http://127.0.0.1:5000/
 
-#from imports import * 
 import record 
 import resynthesis
 import separation
@@ -8,11 +7,10 @@ import warnings
 warnings.filterwarnings("ignore")
 from flask import Flask, render_template, request
 
-
 vocal_parameters = {
   "type": 'vocals',
   "dir": 'models/Anatra40K',
-  "thrshold": 1,
+  "threshold": 1,
   "quiet": 20,
   "autotune": 0,
   "loudness_shift": 0,
@@ -22,7 +20,7 @@ vocal_parameters = {
 bass_parameters = {
   "type": 'bass',
   "dir": 'models/Mosca12K',
-  "thrshold": 1,
+  "threshold": 1,
   "quiet": 20,
   "autotune": 0,
   "loudness_shift": 0,
@@ -31,20 +29,15 @@ bass_parameters = {
 
 
 app = Flask(__name__)
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == "POST":
-       song = request.form.get('songs')
-       print(song)
+       option = request.form.get('songs')
+       print(option)
     return render_template('index.html')
 
-
-############
-### MAIN ###
-############
-
 if __name__ == "__main__":
-
   app.run(debug=True)
 
 

@@ -4,15 +4,17 @@
         <title>soundscape</title>
     </head>
     <body>
-        <p>Registra audio con microfono (m) o usare brano di prova (p)?</p>
+        <p>Soundscappa</p>
         <form action="{{ url_for('index') }}" method="post">
-            <label for="song">Choose a song:</label>
+            <label for="song">Choose a song or transform your own:</label>
             <select id="songs" name="songs">
                 <option value="celeste.wav">Cleste - Stop This Train</option>
                 <option value="flyme.wav">Frank Sinatra - Fly Me To The Moon</option>
                 <option value="volare.wav">Maximo Cobos - Volare</option>
+                <option value="record">Record audio...</option>
+                <option value="load">Load file...</option>
             </select>
-            <button type="submit">Scegli</button>
+            <button type="submit">Start</button>
         </form>
     </body>
 </html>
