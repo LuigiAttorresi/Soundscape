@@ -1,12 +1,8 @@
-print('Start feature input')
-
 import crepe
 import ddsp
 import ddsp.training
 import separation
 import numpy as np
-
-print('End feature input')
 
 #Just for testing
 import time

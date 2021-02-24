@@ -1,12 +1,7 @@
-print('Start separate input')
-
 import os
 import librosa
 from spleeter.separator import Separator
 import numpy as np
-
-print('End separate input')
-
 
 hop_length = 256
 frame_length = 512

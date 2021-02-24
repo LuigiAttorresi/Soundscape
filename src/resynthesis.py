@@ -1,5 +1,3 @@
-print('Start resynth input')
-
 import ddsp
 import ddsp.training
 from ddsp.colab import colab_utils
@@ -15,9 +13,6 @@ from scipy.io.wavfile import write
 import librosa
 import feature_extraction
 from omnizart.drum import app as dapp
-
-print('End resynth input')
-
 
 sample_rate =  DEFAULT_SAMPLE_RATE
 ADJUST = True

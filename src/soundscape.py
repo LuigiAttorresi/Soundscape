@@ -1,6 +1,5 @@
 # http://127.0.0.1:5000/
 
-print('Start main input')
 import record 
 import resynthesis
 import separation
@@ -11,7 +10,6 @@ import os
 import numpy as np
 from scipy.io import wavfile
 from scipy.io.wavfile import write
-print('End main input')
 
 vocal_parameters = {
   "type": 'vocals',
@@ -59,15 +57,20 @@ if __name__ == "__main__":
     audio_file_name = 'recording.wav'
 
   selected_file = os.path.join(audio_folder, audio_file_name)
+  print('Starting separation...')
   separation.separate(audio_file_name)
+  print('Separation done!')
   vocals, _= separation.get_stem_array(audio_file_name,'vocals')
   bass, _ = separation.get_stem_array(audio_file_name,'bass')
  
+  print('Starting resynth...')
   new_vocals = resynthesis.resynth(vocals, vocal_parameters)
   new_bass = resynthesis.resynth(bass, bass_parameters)
+  print('Resynth done!')
 
+  #TODO: drums resynth
 
-   # FINAL MIX
+  # FINAL MIX
   mix = new_vocals + new_bass #+ 0.5 * other + 0.5*background + soundscape_drum[0:np.shape(audio_gen)[1]]
   if len(mix.shape) == 2:
       mix = mix[0]
@@ -141,8 +144,6 @@ if __name__ == "__main__":
     bass_loudness_shift = 0
     bass_pitch_shift = -1
   '''
-
-
 
   '''
   # BACKGROUND DA FINIRE
