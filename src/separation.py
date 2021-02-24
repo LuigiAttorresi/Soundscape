@@ -1,7 +1,12 @@
+print('Start separate input')
+
 import os
 import librosa
 from spleeter.separator import Separator
 import numpy as np
+
+print('End separate input')
+
 
 hop_length = 256
 frame_length = 512
@@ -25,8 +30,7 @@ def get_stem_array(audio_file_name, stem_type):
     stems_folder = os.path.join('output', audio_file_name.split('.')[0])
     stem = os.path.join(stems_folder, stems_names[stem_type])
     audio, _ = librosa.load(stem, sr=16000)
-    audio_arr = audio[np.newaxis, :] # Format needed by ddsp
-    return audio_arr, stem  
+    return audio, stem  
 
 def is_present(audio_array):
     audio_rms = librosa.feature.rms(audio_array, frame_length=frame_length, hop_length=hop_length, center=True)

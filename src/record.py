@@ -1,3 +1,5 @@
+print('Start record input')
+
 import argparse
 import tempfile
 import queue
@@ -6,6 +8,9 @@ import sounddevice as sd
 import soundfile as sf 
 import numpy 
 import os
+
+print('End record input')
+
 
 # Recording functions
 def int_or_str(text):

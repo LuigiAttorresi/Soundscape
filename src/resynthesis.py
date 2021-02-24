@@ -1,3 +1,5 @@
+print('Start resynth input')
+
 import ddsp
 import ddsp.training
 from ddsp.colab import colab_utils
@@ -13,6 +15,9 @@ from scipy.io.wavfile import write
 import librosa
 import feature_extraction
 from omnizart.drum import app as dapp
+
+print('End resynth input')
+
 
 sample_rate =  DEFAULT_SAMPLE_RATE
 ADJUST = True
@@ -31,7 +36,7 @@ def shift_f0(audio_features, pitch_shift=0.0):
 
 def resynth(audio, audio_parameters):
     audio_features, _ = feature_extraction.extract_features(audio)
-
+    audio = audio[np.newaxis, :]
     gin_file = os.path.join(audio_parameters["dir"], 'operative_config-0.gin')
     
     # Load the dataset statistics.
@@ -149,7 +154,7 @@ def resynth(audio, audio_parameters):
     normalizer = float(np.iinfo(np.int16).max)
     array_of_ints = np.array(
         np.asarray(new_audio) * normalizer, dtype=np.int16)
-    filename = "generated_" + audio_features["type"] + ".wav"
+    filename = "generated_" + audio_parameters["type"] + ".wav"
     wavfile.write(filename, DEFAULT_SAMPLE_RATE, array_of_ints)
 
     return new_audio  # Or array_of_ints??
