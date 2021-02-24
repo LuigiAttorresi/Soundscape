@@ -2,6 +2,8 @@
 
 {% block head %}
 <title>Soundscape</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+<script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
 {% endblock %}
 
 {% block body %}
@@ -17,4 +19,17 @@
     </select>
     <button type="submit">Start</button>
 </form>
+
+<div id="mySwipe" class="swipe">
+    <div class="swipe-wrap">
+      <div><b>0</b></div>
+      <div><b>1</b></div>
+      <div><b>2</b></div>
+    </div>
+</div>
+
+<div class="demo-controls">
+    <a class="btn btn-primary" id="prev">Prev</a>
+    <a class="btn btn-primary" id="next">Next</a>
+</div>
 {% endblock %}

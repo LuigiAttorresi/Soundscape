@@ -5,7 +5,8 @@ import resynthesis
 import separation
 import warnings
 warnings.filterwarnings("ignore")
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, url_for
+import os
 
 vocal_parameters = {
   "type": 'vocals',
@@ -27,14 +28,17 @@ bass_parameters = {
   "pitch_shift": 0
 }
 
+TEMPLATE_DIR = os.path.abspath('src/templates')
+STATIC_DIR = os.path.abspath('src/static')
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder=TEMPLATE_DIR, static_folder=STATIC_DIR)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == "POST":
-       option = request.form.get('songs')
+       option = request.form.get('options')
        print(option)
+       print(url_for('static', filename='css/main.css'))
     return render_template('index.html')
 
 if __name__ == "__main__":

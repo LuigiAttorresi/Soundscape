@@ -3,9 +3,48 @@ body, html {
 }
 
 #title {
-    text-align: center;
+    text-align: right;
+    color: blue;
 }
 
 #options {
     text-align: center;
+}
+
+.swipe {
+    overflow: hidden;
+    /*visibility: hidden;*/
+    position: relative;
+}
+
+.swipe-wrap {
+    overflow: hidden;
+    position: relative;
+}
+
+.swipe-wrap > div {
+    float: left;
+    width: 100%;
+    position: relative;
+}
+
+.btn-primary {
+    background-color: #27AAE1;
+    color: #eee; }
+.btn-primary:hover {
+    background-color: #34afe3; 
+}
+.btn-primary:active {
+    background-color: #1ea3da; 
+}
+  
+.btn-secondary {
+    background-color: #EE3769;
+    color: #eee; 
+}
+.btn-secondary:hover {
+      background-color: #ef4574; 
+}
+.btn-secondary:active {
+      background-color: #ed295e; 
 }
