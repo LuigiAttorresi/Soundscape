@@ -1,6 +1,6 @@
 # http://127.0.0.1:5000/
 
-import record 
+import record
 import resynthesis
 import separation
 import warnings
@@ -38,16 +38,15 @@ def index():
     if request.method == "POST":
        option = request.form.get('options')
        print(option)
-       print(url_for('static', filename='css/main.css'))
     return render_template('index.html')
 
 if __name__ == "__main__":
   app.run(debug=True)
 
 
- 
 
- 
+
+
   '''
   soundscape = 'Stagno'
 
@@ -69,12 +68,12 @@ if __name__ == "__main__":
     bas_autotune = 0
     bass_loudness_shift = 0
     bass_pitch_shift = 0
-    # DRUMS 
+    # DRUMS
     # drums_dir
 
     # BACKGROUND
     background_dir = 'audio\celeste.wav'
-        
+
   elif soundscape == 'Montagna':
     # VOCALS
     vocals_dir = 'models/Motosega10K'
@@ -120,7 +119,7 @@ if __name__ == "__main__":
     background = background[0:vocals.shape[-1]]
 
 
-  
+
   # FINAL MIX
   mix = new_vocals + new_bass + 0.5 * other + 0.5*background #+ soundscape_drum[0:np.shape(audio_gen)[1]]
   if len(mix.shape) == 2:
@@ -132,4 +131,3 @@ if __name__ == "__main__":
   filename = "soundscape.wav"
   wavfile.write(filename, DEFAULT_SAMPLE_RATE, array_of_ints)
   '''
- 

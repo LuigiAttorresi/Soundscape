@@ -1,12 +1,17 @@
-{% extends 'base.html' %}
+<!--
 
-{% block head %}
-<title>Soundscape</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-<script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-{% block body %}
+    <script type="text/javascript" src="{{ url_for('static', filename='js/swipe.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/button.js') }}"></script>
+</head>
+<body>
 <p id="title">Soundscappa</p>
 <form action="{{ url_for('index') }}" method="post">
     <label for="audio">Choose a song or transform your own:</label>
@@ -19,7 +24,9 @@
     </select>
     <button type="submit">Start</button>
 </form>
-
+<main>
+<article class="container">
+        <section id="demo">
 <div id="mySwipe" class="swipe">
     <div class="swipe-wrap">
       <div><b>0</b></div>
@@ -32,4 +39,93 @@
     <a class="btn btn-primary" id="prev">Prev</a>
     <a class="btn btn-primary" id="next">Next</a>
 </div>
-{% endblock %}
+
+</section>
+</article>
+</main>
+
+</body>
+</html>
+
+-->
+
+
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>soundscape</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+
+        <!-- FONT -->
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,200" rel="stylesheet" type="text/css" />
+
+        <!-- REQUIRED STYLE -->
+        <style>
+
+            .swipe {
+                overflow: hidden;
+                visibility: hidden;
+                position: relative;
+            }
+            .swipe-wrap {
+                overflow: hidden;
+                position: relative;
+            }
+            .swipe-wrap > div {
+                float: left;
+                width: 100%;
+                position: relative;
+            }
+
+        </style>
+
+    </head>
+    <body>
+        <header>
+            <div class="container">
+                <h1>SOUNDSCAPE</h1>
+                <p>Soundscape ti permette di trasformare la voce di Al Bano in un'anatra</p>
+            </div>
+        </header>
+
+        <main>
+            <article class="container">
+                <section id="panels">
+
+                    <h2>SELEZIONA LA MODALITÀ</h2>
+
+                    <div id="mySwipe" class="swipe">
+                        <div class="swipe-wrap">
+                            <div><b>Brano di prova</b></div>
+                            <div><b>Upload brano</b></div>
+                            <div><b>Record</b></div>
+                        </div>
+                    </div>
+
+                    <div class="panels-controls">
+                        <a class="btn btn-primary" id="prev">Prev</a>
+                        <a class="btn btn-primary" id="next">Next</a>
+                    </div>
+                </section>
+            </article>
+        </main>
+
+        <footer>
+            <div class="container">
+
+                <ul class="list-unstyled">
+                    <li><a href="https://github.com/LuigiAttorresi/Soundscape">Github repository</a></li>
+                    <li><a href="https://github.com/LuigiAttorresi/Soundscape">Join us</a></li>
+                </ul>
+
+            </div>
+        </footer>
+
+        <script src="//cdn.jsdelivr.net/gh/lyfeyaj/swipe/swipe.js"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+    </body>
+</html>
