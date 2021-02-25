@@ -20,7 +20,7 @@ Here is the the goal of _Soundscape_, a Web application meant to make you feel t
 
 
 1. Select, upload or record a song
-2. Choose the soundscape you'd like
+2. Choose the soundscape you like
 3. Let the magic happen!
 
 * The available soundscapes are _Mountain_, _Sea_ and _Pond_
@@ -44,7 +44,7 @@ The whole process is made of three main steps:
 The input audio is analysed and divided into four stems (Vocals, Bass, Drums, Accompaniment) using [Spleeter](https://github.com/deezer/spleeter) by Deezer
 
 #### Timbre Transfer
-Each available soundscape has two harmonic sounds which can be used to resynthesize the vocal and bass lines, if present, depending on their range. The timbre transfer and training of the models are performed by using [DDSPhttps://github.com/magenta/ddsp) by Magenta.
+Each available soundscape has two harmonic sounds which can be used to resynthesize the vocal and bass lines, if present, depending on their range. The timbre transfer and training of the models are performed by using [DDSP](https://github.com/magenta/ddsp) by Magenta.
 
 Each harmonic model is trained on a dataset containing between 15 and 20 minutes of the target sound. Due to the difficulty in finding those environmental sounds with a high variability, quality and length, data augmentation was performed making sure to keep the timbre equal through the whole dataset.
 
@@ -71,5 +71,5 @@ For each soundscape a soundfont was created, containing a series of different so
 This application was developed as a project for the "Creative Programming and Computing" course at [Politecnico di Milano](https://www.polimi.it/en/) (MSc in Music and Acoustic Engineering).
 
 *[Luigi Attorresi](https://github.com/LuigiAttorresi)*<br>
-*[Federico Miotello](https://github.com/fmiotello)*
+*[Federico Miotello](https://github.com/fmiotello)*<br>
 *[Giulio Zanetti](https://github.com/Hamalz)*<br>
