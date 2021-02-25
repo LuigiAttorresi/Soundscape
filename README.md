@@ -63,11 +63,11 @@ For each soundscape a soundfont was created, containing a series of different so
 
 
 
-# References 
+## References 
 
 
 
-# Notes
+## Notes
 This application was developed as a project for the "Creative Programming and Computing" course at [Politecnico di Milano](https://www.polimi.it/en/) (MSc in Music and Acoustic Engineering).
 
 *[Luigi Attorresi](https://github.com/LuigiAttorresi)*<br>
