@@ -159,7 +159,14 @@ def drum_resynth(drum_audio_path, soundfont_path):
     # Omnizart Transcribe and Resynthesize
     midi = dapp.transcribe(drum_audio_path, model_path=None)
     out_name = "generated_drums.wav"
-    raw_wav = midi.fluidsynth(fs=44100, sf2_path=soundfont_path)
-    wavfile.write(out_name, 44100, raw_wav)
-    new_audio, sr = librosa.load(out_name, sr=16000)
+    raw_wav = midi.fluidsynth(fs=DEFAULT_SAMPLE_RATE, sf2_path=soundfont_path)
+    wavfile.write(out_name, DEFAULT_SAMPLE_RATE, raw_wav)
+    new_audio, sr = librosa.load(out_name, sr=DEFAULT_SAMPLE_RATE)
     return new_audio
+
+def generate_background(bg_path, lenght_16kHz):
+    background, sr = librosa.load(bg_path, sr=DEFAULT_SAMPLE_RATE)
+    while len(background) < lenght_16kHz:
+        background = np.append(background, [background])
+    background = background[0:lenght_16kHz]
+    return background

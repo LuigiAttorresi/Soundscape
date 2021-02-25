@@ -53,6 +53,8 @@ if __name__ == "__main__":
   audio_file_name = 'celeste.wav' 
   soundfont_folder = os.path.join('soundfont')
   soundfont_path = os.path.join(soundfont_folder, 'forest_soundfont.sf2')
+  bg_folder = os.path.join('backgrounds')
+  bg_path = os.path.join(bg_folder, 'pond_creek_bg.wav')
 
   if(input_type == 'm'):
     record.rec_and_save()
@@ -64,16 +66,18 @@ if __name__ == "__main__":
   print('Separation done!')
   vocals, _= separation.get_stem_array(audio_file_name,'vocals')
   bass, _= separation.get_stem_array(audio_file_name,'bass')
+  other, _= separation.get_stem_array(audio_file_name,'other')
   drum_path = os.path.join(audio_folder, audio_file_name)
  
   print('Starting resynth...')
   new_vocals = resynthesis.resynth(vocals, vocal_parameters)
   new_bass = resynthesis.resynth(bass, bass_parameters)
   new_drums = resynthesis.drum_resynth(drum_path)
+  background = resynthesis.generate_background(bg_path, len(vocals))
   print('Resynth done!')
 
   # FINAL MIX
-  mix = new_vocals + new_bass #+ 0.5 * other + 0.5*background + soundscape_drum[0:np.shape(audio_gen)[1]]
+  mix = new_vocals + new_bass + 0.5 * other + 0.5*background + new_drums[0:np.shape(len(vocals))[1]]
   if len(mix.shape) == 2:
       mix = mix[0]
 
@@ -146,14 +150,4 @@ if __name__ == "__main__":
     bass_loudness_shift = 0
     bass_pitch_shift = -1
   '''
-
-  '''
-  # BACKGROUND DA FINIRE
-  background, sr = librosa.load(background_dir, sr=16000)
-  if len(background) >= audio.shape[-1]:
-    background = background[0:vocals.shape[-1]]
-  '''
-
   
- 
- 
