@@ -7,3 +7,4 @@ __pycache__
 requirements.in
 generated_*.wav
 soundscape.wav
+.cookie
