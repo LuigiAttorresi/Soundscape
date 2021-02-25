@@ -51,6 +51,8 @@ if __name__ == "__main__":
   input_type = input()
   audio_folder = os.path.join('audio')
   audio_file_name = 'celeste.wav' 
+  soundfont_folder = os.path.join('soundfont')
+  soundfont_path = os.path.join(soundfont_folder, 'forest_soundfont.sf2')
 
   if(input_type == 'm'):
     record.rec_and_save()
@@ -61,14 +63,14 @@ if __name__ == "__main__":
   separation.separate(audio_file_name)
   print('Separation done!')
   vocals, _= separation.get_stem_array(audio_file_name,'vocals')
-  bass, _ = separation.get_stem_array(audio_file_name,'bass')
+  bass, _= separation.get_stem_array(audio_file_name,'bass')
+  drum_path = os.path.join(audio_folder, audio_file_name)
  
   print('Starting resynth...')
   new_vocals = resynthesis.resynth(vocals, vocal_parameters)
   new_bass = resynthesis.resynth(bass, bass_parameters)
+  new_drums = resynthesis.drum_resynth(drum_path)
   print('Resynth done!')
-
-  #TODO: drums resynth
 
   # FINAL MIX
   mix = new_vocals + new_bass #+ 0.5 * other + 0.5*background + soundscape_drum[0:np.shape(audio_gen)[1]]

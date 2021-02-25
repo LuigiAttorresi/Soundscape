@@ -157,15 +157,9 @@ def resynth(audio, audio_parameters):
 def drum_resynth(drum_audio_path, soundfont_path):
 
     # Omnizart Transcribe and Resynthesize
-    print('Transcribing drums...')
     midi = dapp.transcribe(drum_audio_path, model_path=None)
-    print('Drums transcribed!')
-
-    print('Resynth drums...')
-    # out_name = f"{uploaded_audio}_synth.wav"
     out_name = "generated_drums.wav"
     raw_wav = midi.fluidsynth(fs=44100, sf2_path=soundfont_path)
     wavfile.write(out_name, 44100, raw_wav)
     new_audio, sr = librosa.load(out_name, sr=16000)
-    print('Drums Resynthesized!')
     return new_audio
