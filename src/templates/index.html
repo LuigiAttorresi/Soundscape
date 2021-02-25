@@ -99,7 +99,27 @@
 
                     <div id="mySwipe" class="swipe">
                         <div class="swipe-wrap">
-                            <div><b>Brano di prova</b></div>
+                            <div>
+                                <b>
+                                    <form action="{{ url_for('index') }}" method="POST" id="sample_song_form">
+                                        <label for="songs">Choose a sample song: </label>
+                                        <select name="sample_song_selection" form="sample_song_form">
+                                            {% for song in sample_songs %}
+                                                <option value="{{ song }}">{{ song }}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <label for="songs">Choose a soundscape: </label>
+                                        <select name="soundscape_selection" form="sample_song_form">
+                                            {% for scape in soundscapes %}
+                                                <option value="{{ scape }}">{{ scape }}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <div>
+                                            <input type="submit">
+                                        </div>
+                                    </form>
+                                </b>
+                            </div>
                             <div><b>Upload brano</b></div>
                             <div><b>Record</b></div>
                         </div>

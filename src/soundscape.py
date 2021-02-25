@@ -5,8 +5,10 @@ import resynthesis
 import separation
 import warnings
 warnings.filterwarnings("ignore")
-from flask import Flask, render_template, request, url_for
+from flask import Flask, render_template, request, url_for, session, redirect
 import os
+
+soundscapes = ['Montagna', 'Stagno', 'Mare']
 
 vocal_parameters = {
   "type": 'vocals',
@@ -33,18 +35,27 @@ STATIC_DIR = os.path.abspath('src/static')
 
 app = Flask(__name__, template_folder=TEMPLATE_DIR, static_folder=STATIC_DIR)
 
+# Set the secret key to some random bytes. Keep this really secret!
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    if request.method == "POST":
-       option = request.form.get('options')
-       print(option)
-    return render_template('index.html')
+    if request.method == 'POST':
+       session['selected_song'] = request.form.get('sample_song_selection')
+       session['selected_soundscape'] = request.form.get('soundscape_selection')
+       return redirect(url_for('resynth'))
+
+    audio_dir = 'audio'
+    audio_files = [f for f in os.listdir(audio_dir) if os.path.isfile(os.path.join(audio_dir, f))]
+    return render_template('index.html', sample_songs=audio_files, soundscapes=soundscapes)
+
+@app.route('/resynth', methods=['GET', 'POST'])
+def resynth():
+    return render_template('resynth.html', selected_song = session['selected_song'], selected_soundscape = session['selected_soundscape'])
+
 
 if __name__ == "__main__":
   app.run(debug=True)
-
-
-
 
 
   '''

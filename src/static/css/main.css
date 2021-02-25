@@ -65,7 +65,7 @@ h4 {
 }
 
 .container {
-    max-width: 45em;
+    max-width: 50em;
     margin-left: auto;
     margin-right: auto;
     padding: 0 1em;
@@ -92,6 +92,7 @@ header, footer {
 
 .swipe-wrap > div {
     margin: 0;
+    padding: 10;
 }
 .swipe-wrap > div b {
     display: block;
