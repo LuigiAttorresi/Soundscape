@@ -1,6 +1,6 @@
 # http://127.0.0.1:5000/
 
-import record 
+import record
 import resynthesis
 import separation
 import warnings
@@ -68,7 +68,7 @@ if __name__ == "__main__":
   bass, _= separation.get_stem_array(audio_file_name,'bass')
   other, _= separation.get_stem_array(audio_file_name,'other')
   drum_path = os.path.join(audio_folder, audio_file_name)
- 
+
   print('Starting resynth...')
   new_vocals = resynthesis.resynth(vocals, vocal_parameters)
   new_bass = resynthesis.resynth(bass, bass_parameters)
@@ -87,7 +87,7 @@ if __name__ == "__main__":
   filename = "soundscape.wav"
   wavfile.write(filename, 16000, array_of_ints)
 
- 
+
   '''
   soundscape = 'Stagno'
 
@@ -109,12 +109,12 @@ if __name__ == "__main__":
     bas_autotune = 0
     bass_loudness_shift = 0
     bass_pitch_shift = 0
-    # DRUMS 
+    # DRUMS
     # drums_dir
 
     # BACKGROUND
     background_dir = 'audio\celeste.wav'
-        
+
   elif soundscape == 'Montagna':
     # VOCALS
     vocals_dir = 'models/Motosega10K'
