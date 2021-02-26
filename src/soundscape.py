@@ -1,34 +1,40 @@
 # http://127.0.0.1:5000/
 
+
+###########
+# IMPORTS #
+###########
+
+
 import record
 import resynthesis
 import separation
+import params
 import warnings
 warnings.filterwarnings("ignore")
 from flask import Flask, render_template, request, url_for, session, redirect
 import os
 
-soundscapes = ['Montagna', 'Stagno', 'Mare']
 
-vocal_parameters = {
-  "type": 'vocals',
-  "dir": 'models/Anatra40K',
-  "threshold": 1,
-  "quiet": 20,
-  "autotune": 0,
-  "loudness_shift": 0,
-  "pitch_shift": 0
-}
+######################
+#  GLABAL VARIABLES  #
+# AND INITIALIZATION #
+######################
 
-bass_parameters = {
-  "type": 'bass',
-  "dir": 'models/Mosca12K',
-  "threshold": 1,
-  "quiet": 20,
-  "autotune": 0,
-  "loudness_shift": 0,
-  "pitch_shift": 0
-}
+
+params.init_params()
+vocal_parameters = None
+bass_parameters = None
+
+
+#############
+# FUNCTIONS #
+#############
+
+def change_soundscape(soundscape):
+    vocal_parameters = soundscape_params[soundscape]['vocal_params']
+    bass_parameters = soundscape_params[soundscape]['bass_params']
+
 
 TEMPLATE_DIR = os.path.abspath('src/templates')
 STATIC_DIR = os.path.abspath('src/static')
@@ -43,6 +49,7 @@ def index():
     if request.method == 'POST':
        session['selected_song'] = request.form.get('sample_song_selection')
        session['selected_soundscape'] = request.form.get('soundscape_selection')
+       change_soundscape(session['selected_soundscape'])
        return redirect(url_for('resynth'))
 
     audio_dir = 'audio'
@@ -54,74 +61,14 @@ def resynth():
     return render_template('resynth.html', selected_song = session['selected_song'], selected_soundscape = session['selected_soundscape'])
 
 
+########
+# MAIN #
+########
+
+
 if __name__ == "__main__":
+
   app.run(debug=True)
-
-
-  '''
-  soundscape = 'Stagno'
-
-  ADJUST = True
-
-  if soundscape == 'Stagno':
-    # VOCALS
-    vocals_dir = 'models/Anatra40K'
-    vocals_threshold = 1
-    vocals_quiet = 20
-    vocals_autotune = 0
-    vocals_loudness_shift = 0
-    vocals_pitch_shift = 0
-
-    # BASS
-    bass_dir = 'models/Mosca12K'
-    bass_threshold = 1
-    bass_quiet = 20
-    bas_autotune = 0
-    bass_loudness_shift = 0
-    bass_pitch_shift = 0
-    # DRUMS
-    # drums_dir
-
-    # BACKGROUND
-    background_dir = 'audio\celeste.wav'
-
-  elif soundscape == 'Montagna':
-    # VOCALS
-    vocals_dir = 'models/Motosega10K'
-    vocals_threshold = 1
-    vocals_quiet = 20
-    vocals_autotune = 0
-    vocals_loudness_shift = 0
-    vocals_pitch_shift = 0
-
-    # BASS
-    bass_dir = 'models/Mucca40K'
-    bass_threshold = 1
-    bass_quiet = 20
-    bas_autotune = 0
-    bass_loudness_shift = 0
-    bass_pitch_shift = -1
-
-
-  elif soundscape == 'Mare':
-    # VOCALS
-    vocals_dir = 'models/Gabbiano40K'
-    vocals_threshold = 1
-    vocals_quiet = 20
-    vocals_autotune = 0
-    vocals_loudness_shift = 0
-    vocals_pitch_shift = 0
-
-    # BASS
-    bass_dir = 'models\Barca40K'
-    bass_threshold = 1
-    bass_quiet = 20
-    bas_autotune = 0
-    bass_loudness_shift = 0
-    bass_pitch_shift = -1
-  '''
-
-
 
   '''
   # BACKGROUND DA FINIRE
