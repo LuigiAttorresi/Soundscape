@@ -10,25 +10,11 @@
         <!-- FONT -->
         <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,200" rel="stylesheet" type="text/css" />
 
+        <!-- ICONS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
         <!-- REQUIRED STYLE -->
-        <style>
-
-            .swipe {
-                overflow: hidden;
-                visibility: hidden;
-                position: relative;
-            }
-            .swipe-wrap {
-                overflow: hidden;
-                position: relative;
-            }
-            .swipe-wrap > div {
-                float: left;
-                width: 100%;
-                position: relative;
-            }
-
-        </style>
+  
 
     </head>
     <body>
@@ -40,12 +26,46 @@
         </header>
 
         <main>
+
+            <article class="container">
+                <section id="panels">
+
+                    <h2>SELEZIONA IL SOUNDSCAPE</h2>
+
+                    <div id="soundscapeSwipe" class="swipe">
+                        <div class="swipe-wrap">
+                            <div><b>Montagna</b></div>
+                            <div><b>Mare</b></div>
+                            <div><b>Stagno</b></div>
+                        </div>
+                    </div>
+
+                    <div class="panels-controls">
+                    
+                        <svg id="leftArrowSoundscape" class="arrow" viewBox="0 0 100 100">
+                        <g stroke-linejoin="round" stroke-linecap="round">
+                            <circle r="46" cx="50" cy="50" />
+                            <polyline points="60 25, 30 50, 60 75" ></polyline>
+                        </g>
+                        </svg>
+                        <svg id="rightArrowSoundscape" class="arrow" viewBox="0 0 100 100">
+                            <g stroke-linejoin="round" stroke-linecap="round">
+                                <circle r="46" cx="50" cy="50" />
+                                <polyline points="40 25, 70 50, 40 75" ></polyline>
+                            </g>
+                        </svg>
+
+                    </div>
+                </section>
+            </article>
+
+
             <article class="container">
                 <section id="panels">
 
                     <h2>SELEZIONA LA MODALITÀ</h2>
 
-                    <div id="mySwipe" class="swipe">
+                    <div id="uploadSwipe" class="swipe">
                         <div class="swipe-wrap">
                             <div>
                                 <b>
@@ -69,16 +89,41 @@
                                 </b>
                             </div>
                             <div><b>Upload brano</b></div>
-                            <div><b>Record</b></div>
+                            <div>
+                                <b>
+                                    <div id="microphone" class="mic-container">
+                                        <div class="circle">
+                                            <i id="mic"class="fa fa-microphone"></i>
+                                        </div>
+                                    </div>
+                                </b>
+                            </div>
                         </div>
                     </div>
 
                     <div class="panels-controls">
-                        <a class="btn btn-primary" id="prev">Prev</a>
-                        <a class="btn btn-primary" id="next">Next</a>
+                    
+                        <svg id="leftArrowUpload" class="arrow" viewBox="0 0 100 100">
+                            <g stroke-linejoin="round" stroke-linecap="round">
+                                <circle r="46" cx="50" cy="50" />
+                                <polyline points="60 25, 30 50, 60 75" ></polyline>
+                            </g>
+                        </svg>
+                        <svg id="rightArrowUpload" class="arrow" viewBox="0 0 100 100">
+                            <g stroke-linejoin="round" stroke-linecap="round">
+                                <circle r="46" cx="50" cy="50" />
+                                <polyline points="40 25, 70 50, 40 75" ></polyline>
+                            </g>
+                        </svg>
+
                     </div>
                 </section>
             </article>
+
+
+            
+
+
         </main>
 
         <footer>
