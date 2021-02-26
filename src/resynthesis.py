@@ -14,6 +14,9 @@ import librosa
 import feature_extraction
 from omnizart.drum import app as dapp
 
+#Just for testing
+import time
+
 sample_rate =  DEFAULT_SAMPLE_RATE
 ADJUST = True
 
@@ -34,10 +37,13 @@ def resynth(audio, audio_parameters):
     audio = audio[np.newaxis, :]
     gin_file = os.path.join(audio_parameters["dir"], 'operative_config-0.gin')
     
+    start_time = time.time()
+
     # Load the dataset statistics.
     DATASET_STATS = None
     dataset_stats_file = os.path.join(audio_parameters["dir"], 'dataset_statistics.pkl')
     print(f'Loading dataset statistics from {dataset_stats_file}')
+
 
     try:
         if tf.io.gfile.exists(dataset_stats_file):
@@ -141,6 +147,7 @@ def resynth(audio, audio_parameters):
     outputs = model(af, training=False)
     new_audio = model.get_audio_from_outputs(outputs)
 
+
     # Write new_audio into a file.
     # If batched, take first element.
     if len(new_audio.shape) == 2:
@@ -151,6 +158,8 @@ def resynth(audio, audio_parameters):
         np.asarray(new_audio) * normalizer, dtype=np.int16)
     filename = "generated_" + audio_parameters["type"] + ".wav"
     wavfile.write(filename, DEFAULT_SAMPLE_RATE, array_of_ints)
+    new_audio, _ = librosa.load(filename, sample_rate)
+    print('Resynthesis took %.1f seconds' % (time.time() - start_time))      #Just for testing
 
     return new_audio  # Or array_of_ints??
 
@@ -170,3 +179,11 @@ def generate_background(bg_path, lenght_16kHz):
         background = np.append(background, [background])
     background = background[0:lenght_16kHz]
     return background
+
+def adjust_length(array, length):
+    if len(array) > length:
+        new_array = array[0:length]
+    else:
+        n_zeros = length - len(array)
+        new_array = np.pad(array, (0, n_zeros), 'constant')
+    return new_array

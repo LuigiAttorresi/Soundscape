@@ -50,7 +50,7 @@ if __name__ == "__main__":
   print('Registra audio con microfono (m) o usare brano di prova (p)?')
   input_type = input()
   audio_folder = os.path.join('audio')
-  audio_file_name = 'celeste.wav' 
+  audio_file_name = 'anotherone.wav' 
   soundfont_folder = os.path.join('soundfont')
   soundfont_path = os.path.join(soundfont_folder, 'forest_soundfont.sf2')
   bg_folder = os.path.join('backgrounds')
@@ -66,32 +66,71 @@ if __name__ == "__main__":
   print('Separation done!')
   vocals, _= separation.get_stem_array(audio_file_name,'vocals')
   bass, _= separation.get_stem_array(audio_file_name,'bass')
+  drums, _= separation.get_stem_array(audio_file_name,'drums')
   other, _= separation.get_stem_array(audio_file_name,'other')
+
   drum_path = os.path.join(audio_folder, audio_file_name)
+  vocals_present = separation.is_present(vocals)
+  bass_present = separation.is_present(bass)
+  drums_present = separation.is_present(drums)
 
   print('Starting resynth...')
-  new_vocals = resynthesis.resynth(vocals, vocal_parameters)
-  new_bass = resynthesis.resynth(bass, bass_parameters)
-  new_drums = resynthesis.drum_resynth(drum_path)
-  background = resynthesis.generate_background(bg_path, len(vocals))
-  print('Resynth done!')
+  if vocals_present:
+    new_vocals = resynthesis.resynth(vocals, vocal_parameters)
+    audio_length = len(new_vocals)
 
-  # FINAL MIX
-  mix = new_vocals + new_bass + 0.5 * other + 0.5*background + new_drums[0:np.shape(len(vocals))[1]]
-  if len(mix.shape) == 2:
-      mix = mix[0]
+  if bass_present:
+    new_bass = resynthesis.resynth(bass, bass_parameters) 
+    audio_length = len(new_bass)  
+  
+  #if drums_present:
+    #new_drums = resynthesis.drum_resynth(drum_path)            #Scommentare da Mac      
 
-  normalizer = float(np.iinfo(np.int16).max)
-  array_of_ints = np.array(
-      np.asarray(mix) * normalizer, dtype=np.int16)
-  filename = "soundscape.wav"
-  wavfile.write(filename, 16000, array_of_ints)
+  if vocals_present or bass_present or drums_present:
+
+    background = resynthesis.generate_background(bg_path, audio_length) 
+    other = resynthesis.adjust_length(other, audio_length)   
+    #new_drums = resynthesis.adjust_length(new_drums, audio_length)           #Scommentare da Mac
+
+
+    print('Resynth done!')
+
+    # FINAL MIX
+    mix = 0.5*new_vocals + 1.5* new_bass + 0.5 * other + 0.5 * background #+ new_drums    #Scommentare da Mac
+
+    if len(mix.shape) == 2:
+        mix = mix[0]
+
+    normalizer = float(np.iinfo(np.int16).max)
+    array_of_ints = np.array(
+        np.asarray(mix) * normalizer, dtype=np.int16)
+    filename = "soundscape.wav"
+    wavfile.write(filename, 16000, array_of_ints)
+
+    if len(other.shape) == 2:
+        other = other[0]
+
+    normalizer = float(np.iinfo(np.int16).max)
+    array_of_ints = np.array(
+        np.asarray(other) * normalizer, dtype=np.int16)
+    filename = "other.wav"
+    wavfile.write(filename, 16000, array_of_ints)
+
+    if len(background.shape) == 2:
+        background = background[0]
+
+    normalizer = float(np.iinfo(np.int16).max)
+    array_of_ints = np.array(
+        np.asarray(background) * normalizer, dtype=np.int16)
+    filename = "background.wav"
+    wavfile.write(filename, 16000, array_of_ints)
+
+  else:
+    print("The input song must contain at least vocals or bass or drums!")
 
 
   '''
   soundscape = 'Stagno'
-
-  ADJUST = True
 
   if soundscape == 'Stagno':
     # VOCALS
