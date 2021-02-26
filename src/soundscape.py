@@ -16,7 +16,7 @@ warnings.filterwarnings("ignore")
 import numpy as np
 from scipy.io import wavfile
 from scipy.io.wavfile import write
-from flask import Flask, render_template, request, url_for, session, redirect
+from flask import Flask, render_template, request, url_for, session, redirect, send_from_directory
 
 
 ######################
@@ -135,6 +135,10 @@ def index():
 @app.route('/resynth', methods=['GET', 'POST'])
 def resynth():
     return render_template('resynth.html', selected_song = session['selected_song'], selected_soundscape = session['selected_soundscape'])
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 
 ########
