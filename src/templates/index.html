@@ -1,20 +1,151 @@
+<!--
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <script type="text/javascript" src="{{ url_for('static', filename='js/swipe.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/button.js') }}"></script>
+</head>
+<body>
+<p id="title">Soundscappa</p>
+<form action="{{ url_for('index') }}" method="post">
+    <label for="audio">Choose a song or transform your own:</label>
+    <select id="options" name="options">
+        <option value="celeste.wav">Cleste - Stop This Train</option>
+        <option value="flyme.wav">Frank Sinatra - Fly Me To The Moon</option>
+        <option value="volare.wav">Maximo Cobos - Volare</option>
+        <option value="record">Record audio...</option>
+        <option value="load">Load file...</option>
+    </select>
+    <button type="submit">Start</button>
+</form>
+<main>
+<article class="container">
+        <section id="demo">
+<div id="mySwipe" class="swipe">
+    <div class="swipe-wrap">
+      <div><b>0</b></div>
+      <div><b>1</b></div>
+      <div><b>2</b></div>
+    </div>
+</div>
+
+<div class="demo-controls">
+    <a class="btn btn-primary" id="prev">Prev</a>
+    <a class="btn btn-primary" id="next">Next</a>
+</div>
+
+</section>
+</article>
+</main>
+
+</body>
+</html>
+
+-->
+
+
+<!DOCTYPE HTML>
 <html>
     <head>
         <title>soundscape</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+
+        <!-- FONT -->
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,200" rel="stylesheet" type="text/css" />
+
+        <!-- REQUIRED STYLE -->
+        <style>
+
+            .swipe {
+                overflow: hidden;
+                visibility: hidden;
+                position: relative;
+            }
+            .swipe-wrap {
+                overflow: hidden;
+                position: relative;
+            }
+            .swipe-wrap > div {
+                float: left;
+                width: 100%;
+                position: relative;
+            }
+
+        </style>
+
     </head>
     <body>
-        <p>Soundscappa</p>
-        <form action="{{ url_for('index') }}" method="post">
-            <label for="song">Choose a song or transform your own:</label>
-            <select id="songs" name="songs">
-                <option value="celeste.wav">Cleste - Stop This Train</option>
-                <option value="flyme.wav">Frank Sinatra - Fly Me To The Moon</option>
-                <option value="volare.wav">Maximo Cobos - Volare</option>
-                <option value="record">Record audio...</option>
-                <option value="load">Load file...</option>
-            </select>
-            <button type="submit">Start</button>
-        </form>
+        <header>
+            <div class="container">
+                <h1>SOUNDSCAPE</h1>
+                <p>Soundscape ti permette di trasformare la voce di Al Bano in un'anatra</p>
+            </div>
+        </header>
+
+        <main>
+            <article class="container">
+                <section id="panels">
+
+                    <h2>SELEZIONA LA MODALITÀ</h2>
+
+                    <div id="mySwipe" class="swipe">
+                        <div class="swipe-wrap">
+                            <div>
+                                <b>
+                                    <form action="{{ url_for('index') }}" method="POST" id="sample_song_form">
+                                        <label for="songs">Choose a sample song: </label>
+                                        <select name="sample_song_selection" form="sample_song_form">
+                                            {% for song in sample_songs %}
+                                                <option value="{{ song }}">{{ song }}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <label for="songs">Choose a soundscape: </label>
+                                        <select name="soundscape_selection" form="sample_song_form">
+                                            {% for scape in soundscapes %}
+                                                <option value="{{ scape }}">{{ scape }}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <div>
+                                            <input type="submit">
+                                        </div>
+                                    </form>
+                                </b>
+                            </div>
+                            <div><b>Upload brano</b></div>
+                            <div><b>Record</b></div>
+                        </div>
+                    </div>
+
+                    <div class="panels-controls">
+                        <a class="btn btn-primary" id="prev">Prev</a>
+                        <a class="btn btn-primary" id="next">Next</a>
+                    </div>
+                </section>
+            </article>
+        </main>
+
+        <footer>
+            <div class="container">
+
+                <ul class="list-unstyled">
+                    <li><a href="https://github.com/LuigiAttorresi/Soundscape">Github repository</a></li>
+                    <li><a href="https://github.com/LuigiAttorresi/Soundscape">Join us</a></li>
+                </ul>
+
+            </div>
+        </footer>
+
+        <script src="//cdn.jsdelivr.net/gh/lyfeyaj/swipe/swipe.js"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
+
     </body>
 </html>
