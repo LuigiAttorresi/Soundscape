@@ -36,7 +36,7 @@ def resynth(audio, audio_parameters):
     audio_features, _ = feature_extraction.extract_features(audio)
     audio = audio[np.newaxis, :]
     gin_file = os.path.join(audio_parameters["dir"], 'operative_config-0.gin')
-    
+
     start_time = time.time()
 
     # Load the dataset statistics.
@@ -49,7 +49,7 @@ def resynth(audio, audio_parameters):
         if tf.io.gfile.exists(dataset_stats_file):
             with tf.io.gfile.GFile(dataset_stats_file, 'rb') as f:
                 DATASET_STATS = pickle.load(f)
-            
+
     except Exception as err:
         print('Loading dataset statistics from pickle failed: {}.'.format(err))
 
@@ -92,7 +92,7 @@ def resynth(audio, audio_parameters):
     # Build model by running a batch through it.
     _ = model(audio_features, training=False)
 
-    # Resynthesize 
+    # Resynthesize
     audio_features_mod = {k: v.copy() for k, v in audio_features.items()}
 
     mask_on = None
@@ -164,7 +164,6 @@ def resynth(audio, audio_parameters):
     return new_audio  # Or array_of_ints??
 
 def drum_resynth(drum_audio_path, soundfont_path):
-
     # Omnizart Transcribe and Resynthesize
     midi = dapp.transcribe(drum_audio_path, model_path=None)
     out_name = "generated_drums.wav"
