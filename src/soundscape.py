@@ -31,8 +31,8 @@ bass_parameters = None
 #############
 
 def change_soundscape(soundscape):
-    vocal_parameters = soundscape_params[soundscape]['vocal_params']
-    bass_parameters = soundscape_params[soundscape]['bass_params']
+    vocal_parameters = params.soundscape_params[soundscape]['vocal_params']
+    bass_parameters = params.soundscape_params[soundscape]['bass_params']
 
 
 TEMPLATE_DIR = os.path.abspath('src/templates')
@@ -127,7 +127,7 @@ def index():
 
     audio_dir = 'audio'
     audio_files = [f for f in os.listdir(audio_dir) if os.path.isfile(os.path.join(audio_dir, f))]
-    return render_template('index.html', sample_songs=audio_files, soundscapes=soundscapes)
+    return render_template('index.html', sample_songs=audio_files, soundscapes=params.soundscapes)
 
 @app.route('/resynth', methods=['GET', 'POST'])
 def resynth():
