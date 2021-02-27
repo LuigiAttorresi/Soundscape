@@ -84,5 +84,6 @@ nextBtnSoundscape.onclick = nextSelectedSoundscape;
 prevBtnModality.onclick = prevSelectedModality;
 nextBtnModality.onclick = nextSelectedModality;
 
-console.log(document.getElementById("soundscape_selection").value)
+console.log(document.getElementById("soundscape_selection").value);
+console.log(document.getElementById("modality_selection").value);
 update_bg()
