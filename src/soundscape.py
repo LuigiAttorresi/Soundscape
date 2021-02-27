@@ -49,6 +49,7 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    audio_folder = os.path.join('audio')
     output_folder = os.path.join('output')
     soundfont_folder = os.path.join('soundfonts')
     bg_folder = os.path.join('backgrounds')
@@ -61,7 +62,6 @@ def index():
 
         if (modality == 'sample'):
             audio_file_name = session['selected_song']
-            audio_folder = os.path.join('audio')
 
         #elif (modality == 'record'):
 
