@@ -49,7 +49,6 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    audio_folder = os.path.join('audio')
     output_folder = os.path.join('output')
     soundfont_folder = os.path.join('soundfonts')
     bg_folder = os.path.join('backgrounds')
@@ -57,11 +56,21 @@ def index():
     if request.method == 'POST':
         session['selected_song'] = request.form.get('sample_song_selection')
         session['selected_soundscape'] = request.form.get('soundscape_selection')
-        #session['selected_modality'] = request.form.get('modality_selection')
-
+        modality = request.form.get('modality_selection')
         change_soundscape(session['selected_soundscape'])
 
-        audio_file_name = session['selected_song']
+        if (modality == 'sample'):
+            audio_file_name = session['selected_song']
+            audio_folder = os.path.join('audio')
+
+        elif (modality == 'record'):
+            #audio_file_name = recorded file
+            #audio_folder = recorded files folder
+
+        else (modality == 'upload'):
+            #audio_file_name = uploaded file
+            #audio_folder = uploaded files folder
+
         soundfont_path = os.path.join(soundfont_folder, params.soundfont)
         bg_path = os.path.join(bg_folder, params.background)
 
