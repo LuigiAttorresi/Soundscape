@@ -29,6 +29,20 @@ window.mySwipeModality = new Swipe(elementModality, {
   transitionEnd: function(index, elementModality) {}
 });
 
+let update_bg = function () {
+  var soundscape = document.getElementById("soundscape_selection").value
+  var background = document.getElementById('dynamic-background');
+  if (soundscape == 'sea') {
+    background.style.backgroundImage = 'url(../static/images/sea.jpg)';
+  }
+  if (soundscape == 'mountain') {
+    background.style.backgroundImage = 'url(../static/images/mountain.jpg)';
+  }
+  if (soundscape == 'pond') {
+    background.style.backgroundImage = 'url(../static/images/pond.jpg)';
+  }
+}
+
 let index = 0;
 
 let mod = function (x, m) {
@@ -39,14 +53,16 @@ let prevSelectedSoundscape = function () {
     mySwipeSoundscape.prev();
     document.getElementById("soundscape_selection").value = scapes[mod(--index, scapes.length)];
     console.log(document.getElementById("soundscape_selection").value)
+    update_bg()
+
 }
 
 let nextSelectedSoundscape = function () {
     mySwipeSoundscape.next();
     document.getElementById("soundscape_selection").value = scapes[mod(++index, scapes.length)];
     console.log(document.getElementById("soundscape_selection").value)
+    update_bg()
 }
-
 
 prevBtnSoundscape.onclick = prevSelectedSoundscape;
 nextBtnSoundscape.onclick = nextSelectedSoundscape;
@@ -54,48 +70,5 @@ nextBtnSoundscape.onclick = nextSelectedSoundscape;
 prevBtnModality.onclick = mySwipeModality.prev;
 nextBtnModality.onclick = mySwipeModality.next;
 
-/*
-var upload_swipe = document.getElementById('uploadSwipe'),
-    soundscape_swipe = document.getElementById('sdounscapeSwipe'),
-    prevBtnUpload = document.getElementById('rightArrowUpload'),
-    nextBtnUpload = document.getElementById('leftArrowUpload'),
-    prevBtnSoundscape = document.getElementById('rightArrowSoundscape'),
-    nextBtnSoundscape = document.getElementById('rightArrowSoundscape'),
-    mic = document.getElementById('microphone');
-
-
-soundscape_swipe = new Swipe(soundscape_swipe, {
-  startSlide: 0,
-  auto: 0,
-  draggable: false,
-  autoRestart: false,
-  continuous: true,
-  disableScroll: true,
-  stopPropagation: true,
-  callback: function(index, soundscape_swipe) {},
-  transitionEnd: function(index, soundscape_swipe) {}
-});
-
-upload_swipe = new Swipe(upload_swipe, {
-  startSlide: 0,
-  auto: 0,
-  draggable: false,
-  autoRestart: false,
-  continuous: true,
-  disableScroll: true,
-  stopPropagation: true,
-  callback: function(index, upload_swipe) {},
-  transitionEnd: function(index, upload_swipe) {}
-});
-
-
-
-prevBtnUpload.onclick = upload_swipe.prev;
-nextBtnUpload.onclick = upload_swipe.next;
-
-prevBtnSoundscape.onclick = soundscape_swipe.prev;
-nextBtnSoundscape.onclick = soundscape_swipe.next;
-mic.onclick = mic.classList.toggle('active')
-//mic.onclick = console.log("click")
-
-*/
+console.log(document.getElementById("soundscape_selection").value)
+update_bg()

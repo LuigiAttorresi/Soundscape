@@ -14,10 +14,11 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
         <!-- REQUIRED STYLE -->
-  
+
 
     </head>
     <body>
+        <div id = "dynamic-background"></div>
         <header>
             <div class="container">
                 <h1>SOUNDSCAPE</h1>
@@ -28,6 +29,8 @@
         <main>
 
             <article class="container">
+                <form action="{{ url_for('index') }}" method="POST" id="index_form"></form>
+                
                 <section id="panels">
 
                     <h2>SELEZIONA IL SOUNDSCAPE</h2>
@@ -65,7 +68,7 @@
 
                     </div>
 
-                    
+
                 </section>
                 <section id="panels">
 
@@ -73,7 +76,7 @@
                     <h2>SELEZIONA LA MODALITÀ</h2>
 
                    <div class="prova">
-                    
+
                         <div id="mySwipeModality" class="swipe">
                             <div class="swipe-wrap">
                                 <div>
@@ -143,8 +146,7 @@
             </div>
         </footer>
 
-        <script src="//cdn.jsdelivr.net/gh/lyfeyaj/swipe/swipe.js"></script>
-        <script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
-
+        <script src="https://cdn.jsdelivr.net/gh/lyfeyaj/swipe/swipe.js"></script>
+        <script type="module" src="{{ url_for('static', filename='js/main.js') }}"></script>
     </body>
 </html>
