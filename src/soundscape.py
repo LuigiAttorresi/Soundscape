@@ -63,11 +63,12 @@ def index():
             audio_file_name = session['selected_song']
             audio_folder = os.path.join('audio')
 
-        elif (modality == 'record'):
+        #elif (modality == 'record'):
+
             #audio_file_name = recorded file
             #audio_folder = recorded files folder
 
-        else (modality == 'upload'):
+        #else (modality == 'upload'):
             #audio_file_name = uploaded file
             #audio_folder = uploaded files folder
 
