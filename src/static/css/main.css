@@ -3,6 +3,8 @@
     overflow: hidden;
     visibility: hidden;
     position: relative;
+    width: 40em;
+    margin: auto;
 }
 
 .swipe-wrap {
@@ -69,7 +71,7 @@ h4 {
 
 
 .container {
-    width: 30em;    /* Larghezza della casella swipe*/
+    width: 50em;    /* Larghezza della casella swipe*/
     margin-left: auto;  
     margin-right: auto;
     padding: 0 1em;
@@ -147,6 +149,26 @@ footer {
     fill: transparent;
 }
 
+.prova {
+    position: relative;
+}
+
+.myArrowLeft {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.myArrowRight {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+
+}
+
+/*
 #nextSoundscape {
     right: 200px;
   }
@@ -164,10 +186,16 @@ footer {
 }
 
 
+*/
+
+
 
     
   
 .circle {
+    display: block;
+    margin-left: auto;
+    margin-right: auto; 
     width: 80px;
     height: 80px;
     border-radius: 50%;
@@ -191,10 +219,7 @@ transition: .9s;
 }
   
 
-      
-
-
-/*
+    
 .btn {
     display: inline-block;
     padding: 0.5em 1.5em;
@@ -250,4 +275,3 @@ a:visited {
 .btn-secondary:active {
     background-color: #ed295e;
 }
-*/

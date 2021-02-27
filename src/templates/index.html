@@ -34,14 +34,14 @@
 
                     <div id="mySwipeSoundscape" class="swipe">
                         <div class="swipe-wrap">
-                            {% for scape in soundscapes %}
-                                <div>
-                                    <b>
-                                        {{ scape }}
-                                        <input type="hidden" id="soundscape_selection" name="soundscape_selection" form="index_form" value=""/>
-                                    </b>
-                                </div>
-                            {% endfor %}
+                                {% for scape in soundscapes %}
+                                    <div>
+                                        <b>
+                                            {{ scape }}
+                                            <input type="hidden" id="soundscape_selection" name="soundscape_selection" form="index_form" value=""/>
+                                        </b>
+                                    </div>
+                                {% endfor %}
                         </div>
                     </div>
 
@@ -68,67 +68,59 @@
                                 <polyline points="40 25, 70 50, 40 75" ></polyline>
                             </g>
                         </svg>
-
                     </div>
                 </section>
-            </article>
-
-
-            <article class="container">
                 <section id="panels">
+
 
                     <h2>SELEZIONA LA MODALITÀ</h2>
 
-                    <div id="mySwipeModality" class="swipe">
-                        <div class="swipe-wrap">
-                            <div>
-                                <b>
-                                    <label for="songs">Choose a sample song: </label>
-                                    <select name="sample_song_selection" form="index_form">
-                                        {% for song in sample_songs %}
-                                            <option value="{{ song }}">{{ song }}</option>
-                                        {% endfor %}
-                                    </select>
-                                </b>
-                            </div>
-                            <div><b>Upload brano</b></div>
-                            <div>
-                                <b>
-                                    <div id="microphone" class="mic-container">
-                                        <div class="circle">
+                   <div class="prova">
+                    
+                        <div id="mySwipeModality" class="swipe">
+                            <div class="swipe-wrap">
+                                <div>
+                                    <b>
+                                        <label for="songs">Choose a sample song: </label>
+                                        <select name="sample_song_selection" form="index_form">
+                                            {% for song in sample_songs %}
+                                                <option value="{{ song }}">{{ song }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </b>
+                                </div>
+                                <div><b>Upload brano</b></div>
+                                <div><b>
+                                    <div class="mic-container">
+                                        <div id ="microphone" class="circle">
                                             <i id="mic"class="fa fa-microphone"></i>
                                         </div>
                                     </div>
-                                </b>
+                                </b></div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="panels-controls">
-                    
-                        <svg id="nextModality" class="arrow" viewBox="0 0 100 100">
-                            <g stroke-linejoin="round" stroke-linecap="round">
-                                <circle r="46" cx="50" cy="50" />
-                                <polyline points="60 25, 30 50, 60 75" ></polyline>
-                            </g>
-                        </svg>
-                        <svg id="prevModality" class="arrow" viewBox="0 0 100 100">
-                            <g stroke-linejoin="round" stroke-linecap="round">
-                                <circle r="46" cx="50" cy="50" />
-                                <polyline points="40 25, 70 50, 40 75" ></polyline>
-                            </g>
-                        </svg>
-
+                        <a class="myArrowLeft" id="nextModality">
+                            <svg class="arrow" viewBox="0 0 100 100">
+                                <g stroke-linejoin="round" stroke-linecap="round">
+                                    <circle r="46" cx="50" cy="50" />
+                                    <polyline points="60 25, 30 50, 60 75" ></polyline>
+                                </g>
+                            </svg>
+                        </a>
+                        <a class="myArrowRight" id="prevModality">
+                            <svg class="arrow" viewBox="0 0 100 100">
+                                <g stroke-linejoin="round" stroke-linecap="round">
+                                    <circle r="46" cx="50" cy="50" />
+                                    <polyline points="40 25, 70 50, 40 75" ></polyline>
+                                </g>
+                            </svg>
+                        </a>
                     </div>
                 </section>
             </article>
             <div>
                 <input type="submit" form="index_form">
             </div>
-
-
-            
-
 
         </main>
 
