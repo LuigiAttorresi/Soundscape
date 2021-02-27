@@ -32,6 +32,7 @@
 
     </head>
     <body>
+        <div id = "dynamic-background"></div>
         <header>
             <div class="container">
                 <h1>SOUNDSCAPE</h1>
@@ -52,13 +53,13 @@
                                     <div>
                                         <b>
                                             {{ scape }}
-                                            <input type="hidden" id="soundscape_selection" name="soundscape_selection" form="index_form" value=""/>
                                         </b>
                                     </div>
                                 {% endfor %}
                         </div>
                     </div>
-
+                    
+                    <input type="hidden" id="soundscape_selection" name="soundscape_selection" form="index_form" value="mountain"/>
                     <div class="panels-controls">
                         <script>
                             let scapes = [];

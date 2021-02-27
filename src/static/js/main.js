@@ -29,6 +29,20 @@ window.mySwipeModality = new Swipe(elementModality, {
   transitionEnd: function(index, elementModality) {}
 });
 
+let update_bg = function () {
+  var soundscape = document.getElementById("soundscape_selection").value
+  var background = document.getElementById('dynamic-background');
+  if (soundscape == 'sea') {
+    background.style.backgroundImage = 'url(../static/images/sea.jpg)';
+  }
+  if (soundscape == 'mountain') {
+    background.style.backgroundImage = 'url(../static/images/mountain.jpg)';
+  }
+  if (soundscape == 'pond') {
+    background.style.backgroundImage = 'url(../static/images/pond.jpg)';
+  }
+}
+
 let index = 0;
 
 let mod = function (x, m) {
@@ -39,17 +53,22 @@ let prevSelectedSoundscape = function () {
     mySwipeSoundscape.prev();
     document.getElementById("soundscape_selection").value = scapes[mod(--index, scapes.length)];
     console.log(document.getElementById("soundscape_selection").value)
+    update_bg()
+    
 }
 
 let nextSelectedSoundscape = function () {
     mySwipeSoundscape.next();
     document.getElementById("soundscape_selection").value = scapes[mod(++index, scapes.length)];
     console.log(document.getElementById("soundscape_selection").value)
+    update_bg()
 }
-
 
 prevBtnSoundscape.onclick = prevSelectedSoundscape;
 nextBtnSoundscape.onclick = nextSelectedSoundscape;
 
 prevBtnModality.onclick = mySwipeModality.prev;
 nextBtnModality.onclick = mySwipeModality.next;
+
+console.log(document.getElementById("soundscape_selection").value)
+update_bg()
