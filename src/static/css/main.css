@@ -147,19 +147,19 @@ footer {
     fill: transparent;
 }
 
-#leftArrowSoundscape {
+#nextSoundscape {
     right: 200px;
   }
   
-#rightArrowSoundscape {
+#prevSoundscape {
     left: 200px;
 }
 
-#leftArrowUpload {
+#newxtModality {
     right: 200px;
   }
   
-#rightArrowUpload {
+#prevModality {
     left: 200px;
 }
 
