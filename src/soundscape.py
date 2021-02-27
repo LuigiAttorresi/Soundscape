@@ -57,6 +57,7 @@ def index():
     if request.method == 'POST':
         session['selected_song'] = request.form.get('sample_song_selection')
         session['selected_soundscape'] = request.form.get('soundscape_selection')
+        #session['selected_modality'] = request.form.get('modality_selection')
 
         change_soundscape(session['selected_soundscape'])
 
@@ -147,4 +148,5 @@ def favicon():
 ########
 
 if __name__ == "__main__":
+
     app.run(debug=True)
