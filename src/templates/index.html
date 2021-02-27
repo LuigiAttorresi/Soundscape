@@ -30,13 +30,11 @@
 
             <article class="container">
                 <form action="{{ url_for('index') }}" method="POST" id="index_form"></form>
-                
+
                 <section id="panels">
 
                     <h2>SELEZIONA IL SOUNDSCAPE</h2>
-                    <div class="prova">
-
-
+                    <div class="swipeContainer">
                     <div id="mySwipeSoundscape" class="swipe">
                         <div class="swipe-wrap">
                                 {% for scape in soundscapes %}
@@ -65,7 +63,6 @@
                                 </g>
                             </svg>
                         </a>
-
                     </div>
 
 
@@ -75,8 +72,7 @@
 
                     <h2>SELEZIONA LA MODALITÀ</h2>
 
-                   <div class="prova">
-
+                   <div class="swipeContainer">
                         <div id="mySwipeModality" class="swipe">
                             <div class="swipe-wrap">
                                 <div>
@@ -99,6 +95,7 @@
                                 </b></div>
                             </div>
                         </div>
+                        <input type="hidden" id="modality_selection" name="modality_selection" form="index_form" value="{{soundscapes[0]}}"/>
                         <a class="myArrowLeft" id="nextModality">
                             <svg class="arrow" viewBox="0 0 100 100">
                                 <g stroke-linejoin="round" stroke-linecap="round">

@@ -43,7 +43,9 @@ let update_bg = function () {
   }
 }
 
-let index = 0;
+let indexSoundscape = 0;
+let indexModality = 0;
+let modalities = ['sample', 'record', 'upload'];
 
 let mod = function (x, m) {
     return (x%m + m)%m;
@@ -51,7 +53,7 @@ let mod = function (x, m) {
 
 let prevSelectedSoundscape = function () {
     mySwipeSoundscape.prev();
-    document.getElementById("soundscape_selection").value = scapes[mod(--index, scapes.length)];
+    document.getElementById("soundscape_selection").value = scapes[mod(--indexSoundscape, scapes.length)];
     console.log(document.getElementById("soundscape_selection").value)
     update_bg()
 
@@ -59,16 +61,28 @@ let prevSelectedSoundscape = function () {
 
 let nextSelectedSoundscape = function () {
     mySwipeSoundscape.next();
-    document.getElementById("soundscape_selection").value = scapes[mod(++index, scapes.length)];
+    document.getElementById("soundscape_selection").value = scapes[mod(++indexSoundscape, scapes.length)];
     console.log(document.getElementById("soundscape_selection").value)
     update_bg()
+}
+
+let prevSelectedModality = function () {
+    mySwipeModality.prev();
+    document.getElementById("modality_selection").value = modalities[mod(++indexModality, scapes.length)];
+    console.log(document.getElementById("modality_selection").value)
+}
+
+let nextSelectedModality = function () {
+    mySwipeModality.next();
+    document.getElementById("modality_selection").value = modalities[mod(++indexModality, scapes.length)];
+    console.log(document.getElementById("modality_selection").value)
 }
 
 prevBtnSoundscape.onclick = prevSelectedSoundscape;
 nextBtnSoundscape.onclick = nextSelectedSoundscape;
 
-prevBtnModality.onclick = mySwipeModality.prev;
-nextBtnModality.onclick = mySwipeModality.next;
+prevBtnModality.onclick = prevSelectedModality;
+nextBtnModality.onclick = nextSelectedModality;
 
 console.log(document.getElementById("soundscape_selection").value)
 update_bg()

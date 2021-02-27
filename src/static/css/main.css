@@ -89,7 +89,7 @@ h4 {
 
 .container {
     width: 50em;    /* Larghezza della casella swipe*/
-    margin-left: auto;  
+    margin-left: auto;
     margin-right: auto;
     padding: 0 1em;
 }
@@ -165,7 +165,7 @@ footer {
     fill: transparent;
 }
 
-.prova {
+.swipeContainer {
     position: relative;
 }
 
@@ -188,7 +188,7 @@ footer {
 #nextSoundscape {
     right: 200px;
   }
-  
+
 #prevSoundscape {
     left: 200px;
 }
@@ -196,7 +196,7 @@ footer {
 #newxtModality {
     right: 200px;
   }
-  
+
 #prevModality {
     left: 200px;
 }
@@ -206,12 +206,12 @@ footer {
 
 
 
-    
-  
+
+
 .circle {
     display: block;
     margin-left: auto;
-    margin-right: auto; 
+    margin-right: auto;
     width: 80px;
     height: 80px;
     border-radius: 50%;
@@ -227,15 +227,15 @@ footer {
 .circle.active {
 background: #ff0000;
 }
-    
+
 #mic {
 color: #393636;
 font-size: 35px;
 transition: .9s;
 }
-  
 
-    
+
+
 .btn {
     display: inline-block;
     padding: 0.5em 1.5em;
