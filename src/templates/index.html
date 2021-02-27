@@ -31,6 +31,8 @@
                 <section id="panels">
 
                     <h2>SELEZIONA IL SOUNDSCAPE</h2>
+                    <div class="prova">
+
 
                     <div id="mySwipeSoundscape" class="swipe">
                         <div class="swipe-wrap">
@@ -38,37 +40,32 @@
                                     <div>
                                         <b>
                                             {{ scape }}
-                                            <input type="hidden" id="soundscape_selection" name="soundscape_selection" form="index_form" value=""/>
                                         </b>
                                     </div>
                                 {% endfor %}
                         </div>
                     </div>
+                    <input type="hidden" id="soundscape_selection" name="soundscape_selection" form="index_form" value="{{soundscapes[0]}}"/>
+                    <a class="myArrowLeft" id="nextSoundscape">
+                            <svg class="arrow" viewBox="0 0 100 100">
+                                <g stroke-linejoin="round" stroke-linecap="round">
+                                    <circle r="46" cx="50" cy="50" />
+                                    <polyline points="60 25, 30 50, 60 75" ></polyline>
+                                </g>
+                            </svg>
+                        </a>
+                        <a class="myArrowRight" id="prevSoundscape">
+                            <svg class="arrow" viewBox="0 0 100 100">
+                                <g stroke-linejoin="round" stroke-linecap="round">
+                                    <circle r="46" cx="50" cy="50" />
+                                    <polyline points="40 25, 70 50, 40 75" ></polyline>
+                                </g>
+                            </svg>
+                        </a>
 
-                    <div class="panels-controls">
-                        <script>
-                            let scapes = [];
-                            let i = 0;
-                        </script>
-                        {% for scape in soundscapes %}
-                            <script>
-                                scapes[i] = '{{ scape }}';
-                                i++;
-                            </script>
-                        {% endfor %}
-                        <svg id="nextSoundscape" class="arrow" viewBox="0 0 100 100">
-                        <g stroke-linejoin="round" stroke-linecap="round">
-                            <circle r="46" cx="50" cy="50" />
-                            <polyline points="60 25, 30 50, 60 75" ></polyline>
-                        </g>
-                        </svg>
-                        <svg id="prevSoundscape" class="arrow" viewBox="0 0 100 100">
-                            <g stroke-linejoin="round" stroke-linecap="round">
-                                <circle r="46" cx="50" cy="50" />
-                                <polyline points="40 25, 70 50, 40 75" ></polyline>
-                            </g>
-                        </svg>
                     </div>
+
+                    
                 </section>
                 <section id="panels">
 
@@ -121,6 +118,17 @@
             <div>
                 <input type="submit" form="index_form">
             </div>
+
+            <script>
+                let scapes = [];
+                let i = 0;
+            </script>
+            {% for scape in soundscapes %}
+                <script>
+                    scapes[i] = '{{ scape }}';
+                    i++;
+                </script>
+            {% endfor %}
 
         </main>
 
