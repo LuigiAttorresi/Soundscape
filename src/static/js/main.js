@@ -3,7 +3,8 @@ var elementSoundscape = document.getElementById('mySwipeSoundscape'),
     prevBtnSoundscape = document.getElementById('prevSoundscape'),
     nextBtnSoundscape = document.getElementById('nextSoundscape'),
     prevBtnModality = document.getElementById('prevModality'),
-    nextBtnModality = document.getElementById('nextModality');
+    nextBtnModality = document.getElementById('nextModality'),
+    mic = document.getElementById('microphone');
 
 window.mySwipeSoundscape = new Swipe(elementSoundscape, {
   startSlide: 0,
@@ -72,3 +73,62 @@ nextBtnModality.onclick = mySwipeModality.next;
 
 console.log(document.getElementById("soundscape_selection").value)
 update_bg()
+
+
+
+
+
+var uploadDefault = false;
+var uploadRecord = false;
+var uploadSong = false;
+
+//Microphone
+mic.addEventListener("click", function() {
+  mic.classList.toggle("active")
+  discardDefault()
+  discardSong()
+  uploadRecord = true;
+});
+
+//Upload button animation
+var button, parent;
+
+button = document.getElementById('update-button');
+
+parent = button.parentElement;
+
+button.addEventListener("click", function() {
+  parent.classList.add("clicked");
+  return setTimeout((function() {
+    discardRecording();
+    discardDefault();
+    uploadSong = true;
+    return parent.classList.add("success");
+  }), 2600);
+});
+
+
+let discardRecording = function () {
+  uploadRecord = false;
+  if (mic.classList.contains("active")) {
+    mic.classList.remove("active")
+    // TODO stop recording
+  }
+  // TODO delete recording
+}
+
+let discardDefault = function () {
+  uploadDefault = false;
+  // TODO delete uploaded song
+}
+
+let discardSong = function () {
+  uploadSong = false;
+  if (parent.classList.contains("clicked")) {
+    parent.classList.remove("clicked")
+  }
+  if (parent.classList.contains("success")) {
+    parent.classList.remove("success")  
+  }
+  // TODO delete upload
+}
