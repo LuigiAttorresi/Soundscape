@@ -41,31 +41,53 @@
 
         <main>
             <article class="container">
+                <form action="{{ url_for('index') }}" method="POST" id="index_form"></form>
+                <section id="panels">
+
+                    <h2>CHOOSE A SOUNDSCAPE</h2>
+
+                    <div id="mySwipeSoundscape" class="swipe">
+                        <div class="swipe-wrap">
+                                {% for scape in soundscapes %}
+                                    <div>
+                                        <b>
+                                            {{ scape }}
+                                            <input type="hidden" id="soundscape_selection" name="soundscape_selection" form="index_form" value=""/>
+                                        </b>
+                                    </div>
+                                {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="panels-controls">
+                        <script>
+                            let scapes = [];
+                            let i = 0;
+                        </script>
+                        {% for scape in soundscapes %}
+                            <script>
+                                scapes[i] = '{{ scape }}';
+                                i++;
+                            </script>
+                        {% endfor %}
+                        <a class="btn btn-primary" id="prevSoundscape">Prev</a>
+                        <a class="btn btn-primary" id="nextSoundscape">Next</a>
+                    </div>
+                </section>
                 <section id="panels">
 
                     <h2>SELEZIONA LA MODALITÀ</h2>
 
-                    <div id="mySwipe" class="swipe">
+                    <div id="mySwipeModality" class="swipe">
                         <div class="swipe-wrap">
                             <div>
                                 <b>
-                                    <form action="{{ url_for('index') }}" method="POST" id="sample_song_form">
-                                        <label for="songs">Choose a sample song: </label>
-                                        <select name="sample_song_selection" form="sample_song_form">
-                                            {% for song in sample_songs %}
-                                                <option value="{{ song }}">{{ song }}</option>
-                                            {% endfor %}
-                                        </select>
-                                        <label for="songs">Choose a soundscape: </label>
-                                        <select name="soundscape_selection" form="sample_song_form">
-                                            {% for scape in soundscapes %}
-                                                <option value="{{ scape }}">{{ scape }}</option>
-                                            {% endfor %}
-                                        </select>
-                                        <div>
-                                            <input type="submit">
-                                        </div>
-                                    </form>
+                                    <label for="songs">Choose a sample song: </label>
+                                    <select name="sample_song_selection" form="index_form">
+                                        {% for song in sample_songs %}
+                                            <option value="{{ song }}">{{ song }}</option>
+                                        {% endfor %}
+                                    </select>
                                 </b>
                             </div>
                             <div><b>Upload brano</b></div>
@@ -74,11 +96,14 @@
                     </div>
 
                     <div class="panels-controls">
-                        <a class="btn btn-primary" id="prev">Prev</a>
-                        <a class="btn btn-primary" id="next">Next</a>
+                        <a class="btn btn-primary" id="prevModality">Prev</a>
+                        <a class="btn btn-primary" id="nextModality">Next</a>
                     </div>
                 </section>
             </article>
+            <div>
+                <input type="submit" form="index_form">
+            </div>
         </main>
 
         <footer>
@@ -92,8 +117,7 @@
             </div>
         </footer>
 
-        <script src="//cdn.jsdelivr.net/gh/lyfeyaj/swipe/swipe.js"></script>
-        <script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
-
+        <script src="https://cdn.jsdelivr.net/gh/lyfeyaj/swipe/swipe.js"></script>
+        <script type="module" src="{{ url_for('static', filename='js/main.js') }}"></script>
     </body>
 </html>
