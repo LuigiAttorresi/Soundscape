@@ -207,7 +207,7 @@ footer {
 
 
 
-
+/* Inizio microphone*/
 .circle {
     display: block;
     margin-left: auto;
@@ -225,7 +225,11 @@ footer {
   }
 
 .circle.active {
-background: #ff0000;
+    background: #ff0000;
+}
+
+.circle:hover {
+    background: #c8c5c9;
 }
 
 #mic {
@@ -234,7 +238,107 @@ font-size: 35px;
 transition: .9s;
 }
 
+/*Fine microphone*/
 
+/* Inizio upload button */
+
+button:focus {
+    outline: none;
+}
+
+button:hover {
+    background: #c8c5c9;
+}
+
+#button-wrapper {
+    text-align: center;
+    padding: 0 100px;
+}
+
+button {
+    width: 100%;
+    background: #ffffff;
+    border: none;
+    border-radius: 50px;
+    padding: 5px 0;
+    cursor: pointer;
+    -webkit-transition: .3s all ease;
+    transition: .3s all ease;
+    position: relative;
+}
+
+button p {
+    color: #393636;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 40px;
+    max-height: 40px;
+    -webkit-transition: .3s all ease;
+    transition: .3s all ease;
+}
+
+button .fill {
+    /*barra di caricamento*/
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 0%;
+    background: #393636;
+    border-radius: 50px;
+}
+
+button .fa {
+    /*Termine caricamento*/
+    font-size: 25px;
+    color: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    line-height: 50px;
+    -webkit-transform: scale(0);
+    -ms-transform: scale(0);
+    transform: scale(0);
+}
+
+#button-wrapper.clicked {
+    padding: 0;
+}
+
+#button-wrapper.clicked button {
+    background: #ccc;
+    margin-top: 25px;
+}
+
+#button-wrapper.clicked button p {
+    max-height: 0;
+    overflow: hidden
+}
+
+#button-wrapper.clicked button .fill {
+    width: 100%;
+    -webkit-transition: .3s all ease .3s;
+    transition: 2s all ease .6s;
+}
+
+#button-wrapper.success button {
+    margin: 0;
+    padding: 25px;
+    width: 50px;
+}
+
+#button-wrapper.success button .fa {
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
+    -webkit-transition: .3s all ease .3s;
+    transition: .3s all ease .3s;
+}
+
+/*Fine upload button*/
 
 .btn {
     display: inline-block;
