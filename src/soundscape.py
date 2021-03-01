@@ -16,8 +16,8 @@ warnings.filterwarnings("ignore")
 import numpy as np
 from scipy.io import wavfile
 from scipy.io.wavfile import write
-from flask import Flask, render_template, request, url_for, session, redirect, send_from_directory
-
+from flask import Flask, render_template, request, url_for, session, redirect, send_from_directory, flash
+from werkzeug.utils import secure_filename
 
 ######################
 #  GLABAL VARIABLES  #
@@ -41,8 +41,16 @@ def change_soundscape(soundscape):
 
 TEMPLATE_DIR = os.path.abspath('src/templates')
 STATIC_DIR = os.path.abspath('src/static')
+UPLOAD_FOLDER = 'audio'
+ALLOWED_EXTENSIONS = {'wav', 'mp3'}
 
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+           
 app = Flask(__name__, template_folder=TEMPLATE_DIR, static_folder=STATIC_DIR)
+
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # Set the secret key to some random bytes. Keep this really secret!
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
@@ -60,18 +68,31 @@ def index():
         modality = request.form.get('modality_selection')
         change_soundscape(session['selected_soundscape'])
 
-        if (modality == 'sample'):
+        if modality == 'sample':
             audio_file_name = session['selected_song']
+
+        elif modality == 'upload':
+            # check if the post request has the file part
+            if 'uploaded_file' not in request.files:
+                flash('No file part')
+                return redirect(request.url)
+            file = request.files['file']
+            # if user does not select file, browser also
+            # submit an empty part without filename
+            if file.filename == '':
+                flash('No selected file')
+                return redirect(request.url)
+            if file and allowed_file(file.filename):
+                audio_file_name = secure_filename(file.filename)
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], audio_file_name))
+                audio_folder = UPLOAD_FOLDER
+        
+        print('File uploaded!')
 
         #elif (modality == 'record'):
 
             #audio_file_name = recorded file
             #audio_folder = recorded files folder
-
-        #else (modality == 'upload'):
-            #audio_file_name = uploaded file
-            #audio_folder = uploaded files folder
-
         soundfont_path = os.path.join(soundfont_folder, params.soundfont)
         bg_path = os.path.join(bg_folder, params.background)
 

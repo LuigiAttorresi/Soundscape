@@ -395,3 +395,15 @@ a:visited {
 .btn-secondary:active {
     background-color: #ed295e;
 }
+
+#song-uploader {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    outline: none;
+    opacity: 0;
+    cursor: pointer;
+    transform: translateX(-50%);
+  }
