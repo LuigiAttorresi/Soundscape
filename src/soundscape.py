@@ -47,7 +47,7 @@ ALLOWED_EXTENSIONS = {'wav', 'mp3'}
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-           
+
 app = Flask(__name__, template_folder=TEMPLATE_DIR, static_folder=STATIC_DIR)
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -90,8 +90,8 @@ def index():
         #elif (modality == 'record'):
             #audio_file_name = recorded file
             #audio_folder = recorded files folder
-        
-        
+
+
         soundfont_path = os.path.join(soundfont_folder, params.soundfont)
         bg_path = os.path.join(bg_folder, params.background)
 
@@ -159,8 +159,8 @@ def index():
         wavfile.write(filename, 16000, array_of_ints)
 
         return redirect(url_for('resynth'))
-        
-    audio_files = [f for f in os.listdir(audio_folder) if os.path.isfile(os.path.join(audio_folder, f))]
+
+    audio_files = [f for f in os.listdir(audio_folder) if os.path.isfile(os.path.join(audio_folder, f)) and not f.startswith('.')]
     return render_template('index.html', sample_songs=audio_files, soundscapes=params.soundscapes)
 
 
