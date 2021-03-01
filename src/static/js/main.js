@@ -104,9 +104,6 @@ console.log(document.getElementById("modality_selection").value);
 document.getElementById('dynamic-background').style.backgroundImage = 'url(../static/images/mountain.jpg)';
 
 
-
-
-
 var uploadDefault = false;
 var uploadRecord = false;
 var uploadSong = false;
@@ -135,7 +132,6 @@ button.addEventListener("click", function() {
     return parent.classList.add("success");
   }), 2600);
 });
-
 
 let discardRecording = function () {
   uploadRecord = false;
@@ -167,3 +163,9 @@ let formData = new FormData();
      
 formData.append("uploaded_song", uploaded_song);
 fetch('/audio', {method: "POST", body: formData});
+
+var start_button = document.getElementById("start_button");
+
+start_button.addEventListener("click", function() {
+  index_form.submit()
+});
