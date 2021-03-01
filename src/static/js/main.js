@@ -30,17 +30,30 @@ window.mySwipeModality = new Swipe(elementModality, {
   transitionEnd: function(index, elementModality) {}
 });
 
+var audio_sea = new Audio('../static/audio/sea.mp3');
+var audio_mountain = new Audio('../static/audio/mountain.mp3');
+var audio_pond = new Audio('../static/audio/pond.mp3');
+
 let update_bg = function () {
   var soundscape = document.getElementById("soundscape_selection").value
   var background = document.getElementById('dynamic-background');
   if (soundscape == 'sea') {
     background.style.backgroundImage = 'url(../static/images/sea.jpg)';
+    audio_sea.play();
+    audio_mountain.pause();
+    audio_pond.pause();
   }
-  if (soundscape == 'mountain') {
+  else if (soundscape == 'mountain') {
     background.style.backgroundImage = 'url(../static/images/mountain.jpg)';
+    audio_sea.pause();
+    audio_mountain.play();
+    audio_pond.pause();
   }
-  if (soundscape == 'pond') {
+  else if (soundscape == 'pond') {
     background.style.backgroundImage = 'url(../static/images/pond.jpg)';
+    audio_sea.pause();
+    audio_mountain.pause();
+    audio_pond.play();
   }
 }
 
@@ -87,7 +100,8 @@ nextBtnModality.onclick = nextSelectedModality;
 
 console.log(document.getElementById("soundscape_selection").value);
 console.log(document.getElementById("modality_selection").value);
-update_bg()
+//update_bg()
+document.getElementById('dynamic-background').style.backgroundImage = 'url(../static/images/mountain.jpg)';
 
 
 
