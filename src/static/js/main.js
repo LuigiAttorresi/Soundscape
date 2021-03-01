@@ -46,7 +46,7 @@ let update_bg = function () {
 
 let indexSoundscape = 0;
 let indexModality = 0;
-let modalities = ['sample', 'record', 'upload'];
+let modalities = ['sample', 'upload', 'record'];
 
 let mod = function (x, m) {
     return (x%m + m)%m;
@@ -69,7 +69,7 @@ let nextSelectedSoundscape = function () {
 
 let prevSelectedModality = function () {
     mySwipeModality.prev();
-    document.getElementById("modality_selection").value = modalities[mod(++indexModality, scapes.length)];
+    document.getElementById("modality_selection").value = modalities[mod(--indexModality, scapes.length)];
     console.log(document.getElementById("modality_selection").value)
 }
 

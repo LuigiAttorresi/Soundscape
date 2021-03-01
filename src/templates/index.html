@@ -29,7 +29,7 @@
         <main>
 
             <article class="container">
-                <form action="{{ url_for('index') }}" method="POST" id="index_form"></form>
+                <form action="{{ url_for('index') }}" method="POST" id="index_form" enctype="multipart/form-data"></form>
 
                 <section id="panels">
 
@@ -88,7 +88,7 @@
                                 <div><b>
                                     <div id="button-wrapper">
                                         <button id="update-button">
-                                            <input name='uploaded_file' form='index_form'id='song-uploader' type='file' onchange="readURL(this);" accept="audio/*" >
+                                            <input name='uploaded_file' form='index_form' id='song-uploader' type='file' onchange="readURL(this);" accept=".wav, .mp3" >
                                             <p>Upload</p>
                                             <div class="fill"></div>
                                             <div class="fa fa-check"></div>

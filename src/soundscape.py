@@ -41,7 +41,7 @@ def change_soundscape(soundscape):
 
 TEMPLATE_DIR = os.path.abspath('src/templates')
 STATIC_DIR = os.path.abspath('src/static')
-UPLOAD_FOLDER = 'audio'
+UPLOAD_FOLDER = os.path.abspath('audio')
 ALLOWED_EXTENSIONS = {'wav', 'mp3'}
 
 def allowed_file(filename):
@@ -57,6 +57,7 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    audio_file_name=None
     audio_folder = os.path.join('audio')
     output_folder = os.path.join('output')
     soundfont_folder = os.path.join('soundfonts')
@@ -76,7 +77,7 @@ def index():
             if 'uploaded_file' not in request.files:
                 flash('No file part')
                 return redirect(request.url)
-            file = request.files['file']
+            file = request.files['uploaded_file']
             # if user does not select file, browser also
             # submit an empty part without filename
             if file.filename == '':
@@ -85,14 +86,12 @@ def index():
             if file and allowed_file(file.filename):
                 audio_file_name = secure_filename(file.filename)
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], audio_file_name))
-                audio_folder = UPLOAD_FOLDER
-        
-        print('File uploaded!')
 
         #elif (modality == 'record'):
-
             #audio_file_name = recorded file
             #audio_folder = recorded files folder
+        
+        '''
         soundfont_path = os.path.join(soundfont_folder, params.soundfont)
         bg_path = os.path.join(bg_folder, params.background)
 
@@ -160,7 +159,7 @@ def index():
         wavfile.write(filename, 16000, array_of_ints)
 
         return redirect(url_for('resynth'))
-
+        '''
     audio_files = [f for f in os.listdir(audio_folder) if os.path.isfile(os.path.join(audio_folder, f))]
     return render_template('index.html', sample_songs=audio_files, soundscapes=params.soundscapes)
 
