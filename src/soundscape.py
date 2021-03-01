@@ -91,7 +91,7 @@ def index():
             #audio_file_name = recorded file
             #audio_folder = recorded files folder
         
-        '''
+        
         soundfont_path = os.path.join(soundfont_folder, params.soundfont)
         bg_path = os.path.join(bg_folder, params.background)
 
@@ -159,7 +159,7 @@ def index():
         wavfile.write(filename, 16000, array_of_ints)
 
         return redirect(url_for('resynth'))
-        '''
+        
     audio_files = [f for f in os.listdir(audio_folder) if os.path.isfile(os.path.join(audio_folder, f))]
     return render_template('index.html', sample_songs=audio_files, soundscapes=params.soundscapes)
 
