@@ -18,6 +18,7 @@ from scipy.io import wavfile
 from scipy.io.wavfile import write
 from flask import Flask, render_template, request, url_for, session, redirect, send_from_directory, flash
 from werkzeug.utils import secure_filename
+from pydub import AudioSegment
 
 ######################
 #  GLABAL VARIABLES  #
@@ -95,6 +96,8 @@ def index():
         soundfont_path = os.path.join(soundfont_folder, params.soundfont)
         bg_path = os.path.join(bg_folder, params.background)
 
+
+
         print('Starting separation...')
         separation.separate(audio_file_name)
         print('Separation done!')
@@ -140,23 +143,23 @@ def index():
         normalizer = float(np.iinfo(np.int16).max)
         array_of_ints = np.array(np.asarray(mix) * normalizer, dtype=np.int16)
         filename = "soundscape.wav"
-        wavfile.write(filename, 16000, array_of_ints)
+        wavfile.write(os.path.join(STATIC_DIR, 'audio', filename), 16000, array_of_ints)
 
-        if len(other.shape) == 2:
-            other = other[0]
-
-        normalizer = float(np.iinfo(np.int16).max)
-        array_of_ints = np.array(np.asarray(other) * normalizer, dtype=np.int16)
-        filename = "other.wav"
-        wavfile.write(filename, 16000, array_of_ints)
-
-        if len(background.shape) == 2:
-            background = background[0]
-
-        normalizer = float(np.iinfo(np.int16).max)
-        array_of_ints = np.array(np.asarray(background) * normalizer, dtype=np.int16)
-        filename = "background.wav"
-        wavfile.write(filename, 16000, array_of_ints)
+        # if len(other.shape) == 2:
+        #     other = other[0]
+        #
+        # normalizer = float(np.iinfo(np.int16).max)
+        # array_of_ints = np.array(np.asarray(other) * normalizer, dtype=np.int16)
+        # filename = "other.wav"
+        # wavfile.write(filename, 16000, array_of_ints)
+        #
+        # if len(background.shape) == 2:
+        #     background = background[0]
+        #
+        # normalizer = float(np.iinfo(np.int16).max)
+        # array_of_ints = np.array(np.asarray(background) * normalizer, dtype=np.int16)
+        # filename = "background.wav"
+        # wavfile.write(filename, 16000, array_of_ints)
 
         return redirect(url_for('resynth'))
 
@@ -166,7 +169,7 @@ def index():
 
 @app.route('/resynth', methods=['GET', 'POST'])
 def resynth():
-    return render_template('resynth.html', selected_song = session['selected_song'], selected_soundscape = session['selected_soundscape'])
+    return render_template('resynth.html', resynth_song = '../static/audio/soundscape.wav', selected_soundscape = session['selected_soundscape'])
 
 @app.route('/favicon.ico')
 def favicon():
