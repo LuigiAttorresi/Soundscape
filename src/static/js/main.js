@@ -33,6 +33,9 @@ window.mySwipeModality = new Swipe(elementModality, {
 var audio_sea = new Audio('../static/audio/sea.mp3');
 var audio_mountain = new Audio('../static/audio/mountain.mp3');
 var audio_pond = new Audio('../static/audio/pond.mp3');
+audio_sea.loop = "true";
+audio_mountain.loop = "true";
+audio_pond.loop = "true";
 
 let update_bg = function () {
   var soundscape = document.getElementById("soundscape_selection").value
@@ -169,3 +172,9 @@ var start_button = document.getElementById("start_button");
 start_button.addEventListener("click", function() {
   index_form.submit()
 });
+
+let muteUnmute = function() {
+  var icon = document.getElementById("mute-icon");
+  icon.classList.toggle("fa-volume-mute");
+  icon.classList.toggle("fa-volume-up");
+}
