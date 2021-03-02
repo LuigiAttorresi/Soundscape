@@ -173,8 +173,19 @@ start_button.addEventListener("click", function() {
   index_form.submit()
 });
 
+var muted = true;
+
 let muteUnmute = function() {
+  muted = !muted;
   var icon = document.getElementById("mute-icon");
   icon.classList.toggle("fa-volume-mute");
   icon.classList.toggle("fa-volume-up");
+  update_bg()
+  if (muted) {
+    audio_sea.pause();
+    audio_mountain.pause();
+    audio_pond.pause();
+  }
 }
+
+window.muteUnmute = muteUnmute;
