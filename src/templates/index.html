@@ -26,7 +26,6 @@
         </header>
 
         <main>
-
             <article class="container">
                 <form action="{{ url_for('index') }}" method="POST" id="index_form" enctype="multipart/form-data"></form>
 
@@ -95,9 +94,24 @@
                                 </b></div>
                                 <div><b>
                                     <div>
-                                        <div id ="microphone" class="circle">
-                                            <i id="mic"class="fa fa-microphone"></i>
+                                        <div id='gUMArea'>
+                                            <div>
+                                                <!--<input type="radio" name="media" value="video" checked id='mediaVideo'>Video-->
+                                                <input type="hidden" name="media" value="audio" checked id='mediaAudio'>
+                                                <input type="hidden" name='recorded_file' form='index_form' id='song-recorder' type='file' accept=".wav" >
+                                            </div>
+                                            <button class="btn btn-default"  id='gUMbtn'>Record</button>
                                         </div>
+                                        <div id='btns'>
+                                            <button  class="btn btn-default" id='start'>Start</button>
+                                            <button  class="btn btn-default" id='stop'>Stop</button>
+                                        </div>
+                                        <div>
+                                            <ul  class="list-unstyled" id='ul'></ul>
+                                        </div>
+                                        <!--<div id ="microphone" class="circle">
+                                            <i id="mic"class="fa fa-microphone"></i>
+                                        </div>-->
                                     </div>
                                 </b></div>
                             </div>
@@ -122,7 +136,7 @@
                     </div>
                 </section>
             </article>
-            
+
             <div class="ctn">
                 <input type="checkbox" id="check"/>
                 <label for="check" class="btn-label" id="start_button">

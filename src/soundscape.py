@@ -88,9 +88,24 @@ def index():
                 audio_file_name = secure_filename(file.filename)
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], audio_file_name))
 
-        #elif (modality == 'record'):
-            #audio_file_name = recorded file
-            #audio_folder = recorded files folder
+        elif (modality == 'record'):
+            print('prova')
+            # check if the post request has the file part
+            if 'recorded_file' not in request.files:
+                print('prova1')
+                flash('No file part')
+                return redirect(request.url)
+            file = request.files['recorded_file']
+            # if user does not select file, browser also
+            # submit an empty part without filename
+            if file.filename == '':
+                print('prova2')
+                flash('No selected file')
+                return redirect(request.url)
+            if file and allowed_file(file.filename):
+                print('prova3')
+                audio_file_name = secure_filename(file.filename)
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], audio_file_name))
 
 
         soundfont_path = os.path.join(soundfont_folder, params.soundfont)
@@ -98,52 +113,52 @@ def index():
 
 
 
-        print('Starting separation...')
-        separation.separate(audio_file_name)
-        print('Separation done!')
-        vocals, _= separation.get_stem_array(audio_file_name,'vocals')
-        bass, _= separation.get_stem_array(audio_file_name,'bass')
-        drums, _= separation.get_stem_array(audio_file_name,'drums')
-        other, _= separation.get_stem_array(audio_file_name,'other')
-
-        drum_path = os.path.join(output_folder, audio_file_name.split('.')[0], 'drums.wav')
-        vocals_present = separation.is_present(vocals)
-        bass_present = separation.is_present(bass)
-        drums_present = separation.is_present(drums)
-
-        print('Starting resynth...')
-
-        if vocals_present:
-            new_vocals = resynthesis.resynth(vocals, params.vocal_parameters)
-            audio_length = len(new_vocals)
-
-        if bass_present:
-            new_bass = resynthesis.resynth(bass, params.bass_parameters)
-            audio_length = len(new_bass)
-
-        if drums_present:                                                             #Scommentare da Mac
-            new_drums = resynthesis.drum_resynth(drum_path, soundfont_path)           #Scommentare da Mac
-
-        if vocals_present or bass_present or drums_present:
-            background = resynthesis.generate_background(bg_path, audio_length)
-            other = resynthesis.adjust_length(other, audio_length)
-            new_drums = resynthesis.adjust_length(new_drums, audio_length)            #Scommentare da Mac
-        else:
-            print("The input song must contain at least vocals or bass or drums!")
-            # return redirect(url_for(error_page))
-
-        print('Resynth done!')
-
-        # FINAL MIX
-        mix = 0.5*new_vocals + 1.5*new_bass + 0.5*other + 0.5*background + new_drums    #Scommentare da Mac
-
-        if len(mix.shape) == 2:
-            mix = mix[0]
-
-        normalizer = float(np.iinfo(np.int16).max)
-        array_of_ints = np.array(np.asarray(mix) * normalizer, dtype=np.int16)
-        filename = "soundscape.wav"
-        wavfile.write(os.path.join(STATIC_DIR, 'audio', filename), 16000, array_of_ints)
+        # print('Starting separation...')
+        # separation.separate(audio_file_name)
+        # print('Separation done!')
+        # vocals, _= separation.get_stem_array(audio_file_name,'vocals')
+        # bass, _= separation.get_stem_array(audio_file_name,'bass')
+        # drums, _= separation.get_stem_array(audio_file_name,'drums')
+        # other, _= separation.get_stem_array(audio_file_name,'other')
+        #
+        # drum_path = os.path.join(output_folder, audio_file_name.split('.')[0], 'drums.wav')
+        # vocals_present = separation.is_present(vocals)
+        # bass_present = separation.is_present(bass)
+        # drums_present = separation.is_present(drums)
+        #
+        # print('Starting resynth...')
+        #
+        # if vocals_present:
+        #     new_vocals = resynthesis.resynth(vocals, params.vocal_parameters)
+        #     audio_length = len(new_vocals)
+        #
+        # if bass_present:
+        #     new_bass = resynthesis.resynth(bass, params.bass_parameters)
+        #     audio_length = len(new_bass)
+        #
+        # if drums_present:                                                             #Scommentare da Mac
+        #     new_drums = resynthesis.drum_resynth(drum_path, soundfont_path)           #Scommentare da Mac
+        #
+        # if vocals_present or bass_present or drums_present:
+        #     background = resynthesis.generate_background(bg_path, audio_length)
+        #     other = resynthesis.adjust_length(other, audio_length)
+        #     new_drums = resynthesis.adjust_length(new_drums, audio_length)            #Scommentare da Mac
+        # else:
+        #     print("The input song must contain at least vocals or bass or drums!")
+        #     # return redirect(url_for(error_page))
+        #
+        # print('Resynth done!')
+        #
+        # # FINAL MIX
+        # mix = 0.5*new_vocals + 1.5*new_bass + 0.5*other + 0.5*background + new_drums    #Scommentare da Mac
+        #
+        # if len(mix.shape) == 2:
+        #     mix = mix[0]
+        #
+        # normalizer = float(np.iinfo(np.int16).max)
+        # array_of_ints = np.array(np.asarray(mix) * normalizer, dtype=np.int16)
+        # filename = "soundscape.wav"
+        # wavfile.write(os.path.join(STATIC_DIR, 'audio', filename), 16000, array_of_ints)
 
         # if len(other.shape) == 2:
         #     other = other[0]

@@ -112,12 +112,85 @@ var uploadRecord = false;
 var uploadSong = false;
 
 //Microphone
-mic.addEventListener("click", function() {
-  mic.classList.toggle("active")
-  discardDefault()
-  discardSong()
-  uploadRecord = true;
-});
+
+'use strict'
+
+let log = console.log.bind(console),
+    id = val => document.getElementById(val),
+    ul = id('ul'),
+    gUMbtn = id('gUMbtn'),
+    start = id('start'),
+    stop = id('stop'),
+    stream,
+    recorder,
+    counter=1,
+    chunks,
+    media;
+
+id('btns').style.display = 'none';
+
+gUMbtn.onclick = e => {
+    let mv = id('mediaAudio'),
+        mediaOptions = {
+            audio: {
+            tag: 'audio',
+            type: 'audio/wav',
+            ext: '.wav',
+            gUM: {audio: true}
+        }
+    };
+    media = mediaOptions.audio;
+    navigator.mediaDevices.getUserMedia(media.gUM).then(_stream => {
+        stream = _stream;
+        id('gUMArea').style.display = 'none';
+        id('btns').style.display = 'inherit';
+        start.removeAttribute('disabled');
+        recorder = new MediaRecorder(stream);
+        recorder.ondataavailable = e => {
+        chunks.push(e.data);
+        if(recorder.state == 'inactive') makeLink();
+        };
+        log('got media successfully');
+    }).catch(log);
+}
+
+start.onclick = e => {
+    start.disabled = true;
+    stop.removeAttribute('disabled');
+    chunks=[];
+    recorder.start();
+}
+
+stop.onclick = e => {
+    stop.disabled = true;
+    recorder.stop();
+    start.removeAttribute('disabled');
+    id('btns').style.display = 'none';
+}
+
+function makeLink(){
+    let blob = new Blob(chunks, {type: media.type })
+        , url = URL.createObjectURL(blob)
+        , li = document.createElement('li')
+        , mt = document.createElement(media.tag)
+        , hf = document.createElement('a');
+    mt.controls = true;
+    mt.src = url;
+    hf.href = url;
+    id('song-recorder').src = url;
+    li.appendChild(mt);
+    li.appendChild(hf);
+    ul.appendChild(li);
+}
+
+// mic.addEventListener("click", function() {
+//   mic.classList.toggle("active")
+//   if(mic.classList.contains("active")) {
+//
+//   } else {
+//
+//   }
+// });
 
 //Upload button animation
 var button, parent;
@@ -129,43 +202,23 @@ parent = button.parentElement;
 button.addEventListener("click", function() {
   parent.classList.add("clicked");
   return setTimeout((function() {
-    discardRecording();
-    discardDefault();
     uploadSong = true;
     return parent.classList.add("success");
   }), 2600);
 });
 
-let discardRecording = function () {
-  uploadRecord = false;
-  if (mic.classList.contains("active")) {
-    mic.classList.remove("active")
-    // TODO stop recording
-  }
-  // TODO delete recording
-}
-
-let discardDefault = function () {
-  uploadDefault = false;
-  // TODO delete uploaded song
-}
-
-let discardSong = function () {
-  uploadSong = false;
-  if (parent.classList.contains("clicked")) {
-    parent.classList.remove("clicked")
-  }
-  if (parent.classList.contains("success")) {
-    parent.classList.remove("success")  
-  }
-  // TODO delete upload
-}
 
 let uploaded_song = document.getElementById("song-uploader").files[0];
 let formData = new FormData();
-     
+
 formData.append("uploaded_song", uploaded_song);
 fetch('/audio', {method: "POST", body: formData});
+
+// let recorded_song = document.getElementById("song-recorder").files[0];
+// let formDataRec = new FormData();
+// 
+// formDataRec.append("recorded_song", recorded_song);
+// fetch('/audio', {method: "POST", body: formDataRec});
 
 var start_button = document.getElementById("start_button");
 
