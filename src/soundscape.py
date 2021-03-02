@@ -97,7 +97,7 @@ def index():
         bg_path = os.path.join(bg_folder, params.background)
 
 
-
+    
         print('Starting separation...')
         separation.separate(audio_file_name)
         print('Separation done!')
@@ -160,7 +160,7 @@ def index():
         # array_of_ints = np.array(np.asarray(background) * normalizer, dtype=np.int16)
         # filename = "background.wav"
         # wavfile.write(filename, 16000, array_of_ints)
-
+    
         return redirect(url_for('resynth'))
 
     audio_files = [f for f in os.listdir(audio_folder) if os.path.isfile(os.path.join(audio_folder, f)) and not f.startswith('.')]
@@ -183,3 +183,31 @@ def favicon():
 if __name__ == "__main__":
 
     app.run(debug=True)
+
+
+
+""" CITE SPLEETER
+@article{spleeter2020,
+  doi = {10.21105/joss.02154},
+  url = {https://doi.org/10.21105/joss.02154},
+  year = {2020},
+  publisher = {The Open Journal},
+  volume = {5},
+  number = {50},
+  pages = {2154},
+  author = {Romain Hennequin and Anis Khlif and Felix Voituret and Manuel Moussallam},
+  title = {Spleeter: a fast and efficient music source separation tool with pre-trained models},
+  journal = {Journal of Open Source Software},
+  note = {Deezer Research}
+}
+"""
+""" CITE DDSP
+@inproceedings{
+  engel2020ddsp,
+  title={DDSP: Differentiable Digital Signal Processing},
+  author={Jesse Engel and Lamtharn (Hanoi) Hantrakul and Chenjie Gu and Adam Roberts},
+  booktitle={International Conference on Learning Representations},
+  year={2020},
+  url={https://openreview.net/forum?id=B1x1ma4tDr}
+}
+"""
