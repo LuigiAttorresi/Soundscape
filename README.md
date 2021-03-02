@@ -2,10 +2,6 @@
   <img src="https://user-images.githubusercontent.com/57997005/109641068-90646c80-7b51-11eb-85b8-1ef923a57741.png"//>
 </p>
 
-<p align="center">
-  Screenshot interfaccia
-</p>
-
 <h2 align="center">
 <a href="https://gabristucchi.github.io/Spicer/" align="center"> TRY IT </a>
 </h2>
