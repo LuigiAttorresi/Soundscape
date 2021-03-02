@@ -39,7 +39,18 @@
                                 {% for scape in soundscapes %}
                                     <div>
                                         <b>
-                                            {{ scape }}
+                                        <script>
+                                            if ('{{scape}}' == 'sea') {
+                                                document.write('Sea Life')
+                                            }
+                                            else if ('{{scape}}' == 'mountain') {
+                                                document.write('Spring Mountain')
+                                            }
+                                            else if ('{{scape}}' == 'pond') {
+                                                document.write('Natural Pond')
+                                            }
+                                    
+                                        </script>
                                         </b>
                                     </div>
                                 {% endfor %}
