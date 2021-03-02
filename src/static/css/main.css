@@ -36,7 +36,11 @@
     z-index: -1;
 }
 
+/* Mute/Unmute button */
 
+
+
+/* Swiping panels*/
 
 .swipe {
     overflow: hidden;
@@ -124,11 +128,6 @@ p {
     text-align: center;
     color: #f2f2f2;
 }
-
-
-
-
-
 
 .container {
     width: 50em;

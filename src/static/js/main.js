@@ -172,3 +172,9 @@ var start_button = document.getElementById("start_button");
 start_button.addEventListener("click", function() {
   index_form.submit()
 });
+
+let muteUnmute = function() {
+  var icon = document.getElementById("mute-icon");
+  icon.classList.toggle("fa-volume-mute");
+  icon.classList.toggle("fa-volume-up");
+}
