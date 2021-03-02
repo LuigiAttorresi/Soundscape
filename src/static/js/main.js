@@ -33,6 +33,9 @@ window.mySwipeModality = new Swipe(elementModality, {
 var audio_sea = new Audio('../static/audio/sea.mp3');
 var audio_mountain = new Audio('../static/audio/mountain.mp3');
 var audio_pond = new Audio('../static/audio/pond.mp3');
+audio_sea.loop = "true";
+audio_mountain.loop = "true";
+audio_pond.loop = "true";
 
 let update_bg = function () {
   var soundscape = document.getElementById("soundscape_selection").value
