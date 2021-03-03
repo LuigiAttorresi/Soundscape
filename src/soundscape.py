@@ -42,7 +42,7 @@ def change_soundscape(soundscape):
 
 TEMPLATE_DIR = os.path.abspath('src/templates')
 STATIC_DIR = os.path.abspath('src/static')
-UPLOAD_FOLDER = os.path.abspath('audio')
+UPLOAD_FOLDER = os.path.abspath('src/static/audio/uploads')
 ALLOWED_EXTENSIONS = {'wav', 'mp3'}
 
 def allowed_file(filename):
@@ -59,7 +59,7 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 @app.route('/', methods=['GET', 'POST'])
 def index():
     audio_file_name=None
-    audio_folder = os.path.join('audio')
+    audio_folder = os.path.join('src', 'static', 'audio')
     output_folder = os.path.join('output')
     soundfont_folder = os.path.join('soundfonts')
     bg_folder = os.path.join('backgrounds')
@@ -69,6 +69,7 @@ def index():
         session['selected_soundscape'] = request.form.get('soundscape_selection')
         modality = request.form.get('modality_selection')
         change_soundscape(session['selected_soundscape'])
+        session['modality'] = modality
 
         if modality == 'sample':
             audio_file_name = session['selected_song']
@@ -107,79 +108,87 @@ def index():
         soundfont_path = os.path.join(soundfont_folder, params.soundfont)
         bg_path = os.path.join(bg_folder, params.background)
 
-        """
-        print('Starting separation...')
-        separation.separate(audio_file_name)
-        print('Separation done!')
-        vocals, _= separation.get_stem_array(audio_file_name,'vocals')
-        bass, _= separation.get_stem_array(audio_file_name,'bass')
-        drums, _= separation.get_stem_array(audio_file_name,'drums')
-        other, _= separation.get_stem_array(audio_file_name,'other')
+        if (modality == 'upload' or modality == 'record'):
+            print('Pretty Cool')
+            """ print('Starting separation...')
+            separation.separate(audio_file_name)
+            print('Separation done!')
+            vocals, _= separation.get_stem_array(audio_file_name,'vocals')
+            bass, _= separation.get_stem_array(audio_file_name,'bass')
+            drums, _= separation.get_stem_array(audio_file_name,'drums')
+            other, _= separation.get_stem_array(audio_file_name,'other')
 
-        drum_path = os.path.join(output_folder, audio_file_name.split('.')[0], 'drums.wav')
-        vocals_present = separation.is_present(vocals)
-        bass_present = separation.is_present(bass)
-        drums_present = separation.is_present(drums)
+            drum_path = os.path.join(output_folder, audio_file_name.split('.')[0], 'drums.wav')
+            vocals_present = separation.is_present(vocals)
+            bass_present = separation.is_present(bass)
+            drums_present = separation.is_present(drums)
 
-        print('Starting resynth...')
+            print('Starting resynth...')
 
-        if vocals_present:
-            new_vocals = resynthesis.resynth(vocals, params.vocal_parameters)
-            audio_length = len(new_vocals)
+            if vocals_present:
+                new_vocals = resynthesis.resynth(vocals, params.vocal_parameters)
+                audio_length = len(new_vocals)
 
-        if bass_present:
-            new_bass = resynthesis.resynth(bass, params.bass_parameters)
-            audio_length = len(new_bass)
+            if bass_present:
+                new_bass = resynthesis.resynth(bass, params.bass_parameters)
+                audio_length = len(new_bass)
 
-        if drums_present:                                                             #Scommentare da Mac
-            new_drums = resynthesis.drum_resynth(drum_path, soundfont_path)           #Scommentare da Mac
+            if drums_present:                                                             #Scommentare da Mac
+                new_drums = resynthesis.drum_resynth(drum_path, soundfont_path)           #Scommentare da Mac
 
-        if vocals_present or bass_present or drums_present:
-            background = resynthesis.generate_background(bg_path, audio_length)
-            other = resynthesis.adjust_length(other, audio_length)
-            new_drums = resynthesis.adjust_length(new_drums, audio_length)            #Scommentare da Mac
-        else:
-            print("The input song must contain at least vocals or bass or drums!")
-            # return redirect(url_for(error_page))
+            if vocals_present or bass_present or drums_present:
+                background = resynthesis.generate_background(bg_path, audio_length)
+                other = resynthesis.adjust_length(other, audio_length)
+                new_drums = resynthesis.adjust_length(new_drums, audio_length)            #Scommentare da Mac
+            else:
+                print("The input song must contain at least vocals or bass or drums!")
+                # return redirect(url_for(error_page))
 
-        print('Resynth done!')
+            print('Resynth done!')
 
-        # FINAL MIX
-        mix = 0.5*new_vocals + 1.5*new_bass + 0.5*other + 0.5*background + new_drums    #Scommentare da Mac
+            # FINAL MIX
+            mix = 0.5*new_vocals + 1.5*new_bass + 0.5*other + 0.5*background + new_drums    #Scommentare da Mac
 
-        if len(mix.shape) == 2:
-            mix = mix[0]
+            if len(mix.shape) == 2:
+                mix = mix[0]
 
-        normalizer = float(np.iinfo(np.int16).max)
-        array_of_ints = np.array(np.asarray(mix) * normalizer, dtype=np.int16)
-        filename = "soundscape.wav"
-        wavfile.write(os.path.join(STATIC_DIR, 'audio', filename), 16000, array_of_ints)
+            normalizer = float(np.iinfo(np.int16).max)
+            array_of_ints = np.array(np.asarray(mix) * normalizer, dtype=np.int16)
+            filename = "soundscape.wav"
+            wavfile.write(os.path.join(STATIC_DIR, 'audio', filename), 16000, array_of_ints)
 
-        # if len(other.shape) == 2:
-        #     other = other[0]
-        #
-        # normalizer = float(np.iinfo(np.int16).max)
-        # array_of_ints = np.array(np.asarray(other) * normalizer, dtype=np.int16)
-        # filename = "other.wav"
-        # wavfile.write(filename, 16000, array_of_ints)
-        #
-        # if len(background.shape) == 2:
-        #     background = background[0]
-        #
-        # normalizer = float(np.iinfo(np.int16).max)
-        # array_of_ints = np.array(np.asarray(background) * normalizer, dtype=np.int16)
-        # filename = "background.wav"
-        # wavfile.write(filename, 16000, array_of_ints)
-        """
+            # if len(other.shape) == 2:
+            #     other = other[0]
+            #
+            # normalizer = float(np.iinfo(np.int16).max)
+            # array_of_ints = np.array(np.asarray(other) * normalizer, dtype=np.int16)
+            # filename = "other.wav"
+            # wavfile.write(filename, 16000, array_of_ints)
+            #
+            # if len(background.shape) == 2:
+            #     background = background[0]
+            #
+            # normalizer = float(np.iinfo(np.int16).max)
+            # array_of_ints = np.array(np.asarray(background) * normalizer, dtype=np.int16)
+            # filename = "background.wav"
+            # wavfile.write(filename, 16000, array_of_ints) """
         return redirect(url_for('resynth'))
 
-    audio_files = [f for f in os.listdir(audio_folder) if os.path.isfile(os.path.join(audio_folder, f)) and not f.startswith('.')]
-    return render_template('index.html', sample_songs=audio_files, soundscapes=params.soundscapes)
+    sample_folder = os.path.join(audio_folder, 'samples')
+    sample_files = [f.split('.')[0] for f in os.listdir(sample_folder) if os.path.isfile(os.path.join(sample_folder, f)) and not f.startswith('.')]
+    return render_template('index.html', sample_songs=sample_files, soundscapes=params.soundscapes)
 
 
 @app.route('/resynth', methods=['GET', 'POST'])
 def resynth():
-    return render_template('resynth.html', resynth_song = '../static/audio/soundscape.wav', selected_soundscape = session['selected_soundscape'])
+    modality = session['modality']
+
+    if (modality == 'upload' or modality == 'record'):
+        resynth_song = '../static/audio/soundscape.wav'
+    else:
+        resynth_song = os.path.join(STATIC_DIR, 'audio', session['selected_song'])
+
+    return render_template('resynth.html', resynth_song = resynth, selected_soundscape = session['selected_soundscape'])
 
 @app.route('/favicon.ico')
 def favicon():

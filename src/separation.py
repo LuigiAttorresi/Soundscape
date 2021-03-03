@@ -13,7 +13,7 @@ stems_names = {
     'other': 'other.wav'}
 
 def separate(audio_file_name):
-    audio_folder = os.path.join('audio')
+    audio_folder = os.path.join('src', 'static', 'audio', 'uploads')
     selected_file = os.path.join(audio_folder, audio_file_name)
 
     audio, _ = librosa.load(selected_file, sr=16000)
