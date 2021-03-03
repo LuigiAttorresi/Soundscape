@@ -554,8 +554,8 @@ button .fa {
   }
 
 .player-panels {
-    position: absolute;              
-    top: 50%;       
+    position: absolute;
+    top: 50%;
     transform: translate(160px, -100%);
 }
 
@@ -563,3 +563,6 @@ button .fa {
     margin-top: 60px;
 }
 
+#song-recorder {
+  display: none;
+}
