@@ -89,21 +89,21 @@ def index():
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], audio_file_name))
 
         elif (modality == 'record'):
-            print('prova')
-            # check if the post request has the file part
+            #check if the post request has the file part
             if 'recorded_file' not in request.files:
-                print('prova1')
+                print('No file part')
                 flash('No file part')
                 return redirect(request.url)
             file = request.files['recorded_file']
+            print(file)
             # if user does not select file, browser also
             # submit an empty part without filename
             if file.filename == '':
-                print('prova2')
+                print('No selected file')
                 flash('No selected file')
                 return redirect(request.url)
             if file and allowed_file(file.filename):
-                print('prova3')
+                print('Pretty Cool')
                 audio_file_name = secure_filename(file.filename)
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], audio_file_name))
 

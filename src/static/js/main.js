@@ -130,8 +130,7 @@ let log = console.log.bind(console),
 id('btns').style.display = 'none';
 
 gUMbtn.onclick = e => {
-    let mv = id('mediaAudio'),
-        mediaOptions = {
+    let mediaOptions = {
             audio: {
             tag: 'audio',
             type: 'audio/wav',
@@ -148,7 +147,10 @@ gUMbtn.onclick = e => {
         recorder = new MediaRecorder(stream);
         recorder.ondataavailable = e => {
         chunks.push(e.data);
-        if(recorder.state == 'inactive') makeLink();
+        if(recorder.state == 'inactive') {
+          makeLink();
+          console.log('Link Made')
+        }
         };
         log('got media successfully');
     }).catch(log);
@@ -169,18 +171,30 @@ stop.onclick = e => {
 }
 
 function makeLink(){
-    let blob = new Blob(chunks, {type: media.type })
+    let blob = new File(chunks, "recording.wav", {type: media.type })
         , url = URL.createObjectURL(blob)
         , li = document.createElement('li')
         , mt = document.createElement(media.tag)
         , hf = document.createElement('a');
+    console.log(blob.name)
     mt.controls = true;
     mt.src = url;
+    mt.id = 'audio-player'
     hf.href = url;
-    id('song-recorder').src = url;
     li.appendChild(mt);
     li.appendChild(hf);
     ul.appendChild(li);
+    
+    let list = new DataTransfer();
+    list.items.add(blob);
+    let myFileList = list.files;
+    id('song-recorder').files = myFileList;
+    console.log(id('song-recorder').files[0]);
+    
+    let recorded_file = id("song-recorder").files[0];
+    let formDataRec = new FormData();
+    formDataRec.append("recorded_file", recorded_file);
+    fetch('/audio', {method: "POST", body: formDataRec});
 }
 
 // mic.addEventListener("click", function() {
@@ -209,16 +223,11 @@ button.addEventListener("click", function() {
 
 
 let uploaded_song = document.getElementById("song-uploader").files[0];
-let formData = new FormData();
+let formDataUp = new FormData();
 
-formData.append("uploaded_song", uploaded_song);
-fetch('/audio', {method: "POST", body: formData});
+formDataUp.append("uploaded_song", uploaded_song);
+fetch('/audio', {method: "POST", body: formDataUp});
 
-// let recorded_song = document.getElementById("song-recorder").files[0];
-// let formDataRec = new FormData();
-// 
-// formDataRec.append("recorded_song", recorded_song);
-// fetch('/audio', {method: "POST", body: formDataRec});
 
 var start_button = document.getElementById("start_button");
 
