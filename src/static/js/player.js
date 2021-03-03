@@ -1,3 +1,18 @@
-document.addEventListener('DOMContentLoaded', function() {
-    new GreenAudioPlayer('.player', { showTooltips: true, showDownloadButton: true, enableKeystrokes: true });
+
+document.addEventListener("DOMContentLoaded", function() {
+    GreenAudioPlayer.init({
+        selector: ".player-original",
+        stopOthersOnPlay: true,
+        showTooltips: true,
+        showDownloadButton: true,
+        enableKeystrokes: true
+    });
+
+    GreenAudioPlayer.init({
+        selector: ".player-result",
+        stopOthersOnPlay: true,
+        showTooltips: true,
+        showDownloadButton: true,
+        enableKeystrokes: true
+    });
 });

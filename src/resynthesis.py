@@ -22,12 +22,12 @@ ADJUST = True
 
 # Helper Functions
 def shift_ld(audio_features, ld_shift=0.0):
-    """Shift loudness by a number of ocatves."""
+    '''Shift loudness by a number of ocatves.'''
     audio_features['loudness_db'] += ld_shift
     return audio_features
 
 def shift_f0(audio_features, pitch_shift=0.0):
-  """Shift f0 by a number of ocatves."""
+  '''Shift f0 by a number of ocatves.'''
   audio_features['f0_hz'] *= 2.0 ** (pitch_shift)
   audio_features['f0_hz'] = np.clip(audio_features['f0_hz'], 0.0, librosa.midi_to_hz(110.0))
   return audio_features
@@ -35,13 +35,13 @@ def shift_f0(audio_features, pitch_shift=0.0):
 def resynth(audio, audio_parameters):
     audio_features, _ = feature_extraction.extract_features(audio)
     audio = audio[np.newaxis, :]
-    gin_file = os.path.join(audio_parameters["dir"], 'operative_config-0.gin')
+    gin_file = os.path.join(audio_parameters['dir'], 'operative_config-0.gin')
 
     start_time = time.time()
 
     # Load the dataset statistics.
     DATASET_STATS = None
-    dataset_stats_file = os.path.join(audio_parameters["dir"], 'dataset_statistics.pkl')
+    dataset_stats_file = os.path.join(audio_parameters['dir'], 'dataset_statistics.pkl')
     print(f'Loading dataset statistics from {dataset_stats_file}')
 
 
@@ -58,9 +58,9 @@ def resynth(audio, audio_parameters):
         gin.parse_config_file(gin_file, skip_unknown=True)
 
     # Assumes only one checkpoint in the folder, 'ckpt-[iter]`.
-    ckpt_files = [f for f in tf.io.gfile.listdir(audio_parameters["dir"]) if 'ckpt' in f]
+    ckpt_files = [f for f in tf.io.gfile.listdir(audio_parameters['dir']) if 'ckpt' in f]
     ckpt_name = ckpt_files[0].split('.')[0]
-    ckpt = os.path.join(audio_parameters["dir"], ckpt_name)
+    ckpt = os.path.join(audio_parameters['dir'], ckpt_name)
 
     # Ensure dimensions and sampling rates are equal
     time_steps_train = gin.query_parameter('DefaultPreprocessor.time_steps')
@@ -98,8 +98,8 @@ def resynth(audio, audio_parameters):
     mask_on = None
 
     if ADJUST and DATASET_STATS is not None:
-        # Detect sections that are "on".
-        mask_on, note_on_value = detect_notes(audio_features['loudness_db'], audio_features['f0_confidence'], audio_parameters["threshold"])
+        # Detect sections that are 'on'.
+        mask_on, note_on_value = detect_notes(audio_features['loudness_db'], audio_features['f0_confidence'], audio_parameters['threshold'])
 
         if np.any(mask_on):
             # Shift the pitch register.
@@ -117,7 +117,7 @@ def resynth(audio, audio_parameters):
 
             # Turn down the note_off parts.
             mask_off = np.logical_not(mask_on)
-            loudness_norm[mask_off] -=  audio_parameters["quiet"] * (1.0 - note_on_value[mask_off][:, np.newaxis])
+            loudness_norm[mask_off] -=  audio_parameters['quiet'] * (1.0 - note_on_value[mask_off][:, np.newaxis])
             loudness_norm = np.reshape(loudness_norm, audio_features['loudness_db'].shape)
 
             audio_features_mod['loudness_db'] = loudness_norm
@@ -138,8 +138,8 @@ def resynth(audio, audio_parameters):
         print('\nSkipping auto-adujst (box not checked or no dataset statistics found).')
 
     # Manual Shifts.
-    audio_features_mod = shift_ld(audio_features_mod, audio_parameters["loudness_shift"])
-    audio_features_mod = shift_f0(audio_features_mod, audio_parameters["pitch_shift"])
+    audio_features_mod = shift_ld(audio_features_mod, audio_parameters['loudness_shift'])
+    audio_features_mod = shift_f0(audio_features_mod, audio_parameters['pitch_shift'])
 
     af = audio_features if audio_features_mod is None else audio_features_mod
 
@@ -156,7 +156,7 @@ def resynth(audio, audio_parameters):
     normalizer = float(np.iinfo(np.int16).max)
     array_of_ints = np.array(
         np.asarray(new_audio) * normalizer, dtype=np.int16)
-    filename = "generated_" + audio_parameters["type"] + ".wav"
+    filename = 'generated_' + audio_parameters['type'] + '.wav'
     wavfile.write(filename, DEFAULT_SAMPLE_RATE, array_of_ints)
     new_audio, _ = librosa.load(filename, sample_rate)
     print('Resynthesis took %.1f seconds' % (time.time() - start_time))      #Just for testing
@@ -166,7 +166,7 @@ def resynth(audio, audio_parameters):
 def drum_resynth(drum_audio_path, soundfont_path):
     # Omnizart Transcribe and Resynthesize
     midi = dapp.transcribe(drum_audio_path, model_path=None)
-    out_name = "generated_drums.wav"
+    out_name = 'generated_drums.wav'
     raw_wav = midi.fluidsynth(fs=DEFAULT_SAMPLE_RATE, sf2_path=soundfont_path)
     wavfile.write(out_name, DEFAULT_SAMPLE_RATE, raw_wav)
     new_audio, sr = librosa.load(out_name, sr=DEFAULT_SAMPLE_RATE)

@@ -5,11 +5,11 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+        <link rel="stylesheet" href="{{ url_for("static", filename="css/main.css") }}">
 
         <script src="https://kit.fontawesome.com/acb2b71cb3.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/gh/lyfeyaj/swipe/swipe.js"></script>
-        <script type="module" src="{{ url_for('static', filename='js/main.js') }}"></script>
+        <script type="module" src="{{ url_for("static", filename="js/main.js") }}"></script>
 
         <!-- FONT -->
         <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,200" rel="stylesheet" type="text/css" />
@@ -22,7 +22,7 @@
         <!-- SCRIPTS -->
         <script src="https://cdn.jsdelivr.net/gh/lyfeyaj/swipe/swipe.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-        <script type="module" src="{{ url_for('static', filename='js/main.js') }}"></script>
+        <script type="module" src="{{ url_for("static", filename="js/main.js") }}"></script>
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     </head>
 
@@ -35,14 +35,14 @@
 
         <header>
             <div class="container">
-                <h1>SOUNDSCAPE</h1>
+                <h1><a href="{{ url_for("index") }}" style="text-decoration: none; color:white;">SOUNDSCAPE</a></h1>
                 <p id="subtitle">Hear Differently</p>
             </div>
         </header>
 
         <main>
             <article class="container">
-                <form action="{{ url_for('index') }}" method="POST" id="index_form" enctype="multipart/form-data"></form>
+                <form action="{{ url_for("index") }}" method="POST" id="index_form" enctype="multipart/form-data"></form>
 
                 <section id="panels">
 
@@ -54,14 +54,14 @@
                                     <div>
                                         <b>
                                         <script>
-                                            if ('{{scape}}' == 'sea') {
-                                                document.write('Sea Life')
+                                            if ("{{scape}}" == "sea") {
+                                                document.write("Sea Life")
                                             }
-                                            else if ('{{scape}}' == 'mountain') {
-                                                document.write('Spring Mountain')
+                                            else if ("{{scape}}" == "mountain") {
+                                                document.write("Spring Mountain")
                                             }
-                                            else if ('{{scape}}' == 'pond') {
-                                                document.write('Natural Pond')
+                                            else if ("{{scape}}" == "pond") {
+                                                document.write("Natural Pond")
                                             }
 
                                         </script>
@@ -110,8 +110,8 @@
                                 </div>
                                 <div><b>
                                     <div id="button-wrapper">
-                                        <button id="update-button" class="btn-text-small" onchange='fileUploaded()'>
-                                            <input name='uploaded_file' form='index_form' id='song-uploader' type='file' accept=".wav, .mp3" >
+                                        <button id="update-button" class="btn-text-small" onchange="fileUploaded()">
+                                            <input name="uploaded_file" form="index_form" id="song-uploader" type="file" accept=".wav, .mp3" >
                                             <!-- <div class="fill"></div>
                                             <div class="fa fa-check"></div> -->
                                             <p class="btn-text-small" id="file-not-uploaded">Upload</p>
@@ -121,20 +121,20 @@
                                 </b></div>
                                 <div><b>
                                     <div>
-                                        <div id='gUMArea'>
+                                        <div id="gUMArea">
                                             <div>
-                                                <!--<input type="radio" name="media" value="video" checked id='mediaVideo'>Video-->
-                                                <input type="hidden" name="media" value="audio" checked id='mediaAudio'/>
-                                                <input type='file' id='song-recorder' name='recorded_file' form='index_form' files=[] />
+                                                <!--<input type="radio" name="media" value="video" checked id="mediaVideo">Video-->
+                                                <input type="hidden" name="media" value="audio" checked id="mediaAudio"/>
+                                                <input type="file" id="song-recorder" name="recorded_file" form="index_form" files=[] />
                                             </div>
-                                            <button class="btn-text-small" id='gUMbtn'>Record</button>
+                                            <button class="btn-text-small" id="gUMbtn">Record</button>
                                         </div>
-                                        <div id='btns'>
-                                            <button  class="btn-text-small" id='start'>Start</button>
-                                            <button  class="btn-text-small" id='stop'>Stop</button>
+                                        <div id="btns">
+                                            <button  class="btn-text-small" id="start">Start</button>
+                                            <button  class="btn-text-small" id="stop">Stop</button>
                                         </div>
                                         <div>
-                                            <ul  class="list-unstyled" id='ul'></ul>
+                                            <ul  class="list-unstyled" id="ul"></ul>
                                         </div>
                                         <!--<div id ="microphone" class="circle">
                                             <i id="mic"class="fa fa-microphone"></i>
@@ -178,7 +178,7 @@
             </script>
             {% for scape in soundscapes %}
                 <script>
-                    scapes[i] = '{{ scape }}';
+                    scapes[i] = "{{ scape }}";
                     i++;
                 </script>
             {% endfor %}

@@ -94,7 +94,7 @@ html, main {
 
 body {
     height: 100%;
-    font-family: 'Source Code Pro', Courier, monospace;
+    font-family: "Source Code Pro", Courier, monospace;
     font-size: 14px;
     line-height: 1.5;
 }
@@ -106,7 +106,7 @@ h1, h2, h3, h4, h5, h6 {
     text-shadow: 2px 2px 10px rgb(10, 10, 10);
 }
 h1:after, h2:after, h3:after, h4:after, h5:after, h6:after {
-    content: '';
+    content: "";
     display: block;
     width: 6em;
     height: 2px;
@@ -164,7 +164,7 @@ header {
     display: inline;
 }
 .list-unstyled li + li:before {
-    content: ' • ';
+    content: " • ";
 }
 
 #panels {
@@ -247,44 +247,6 @@ h1:after, h2:after, h3:after, h4:after, h5:after, h6:after {
 /* Fine frecce*/
 
 
-
-
-/* Inizio microphone*/
-.circle {
-    cursor: pointer;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    background: #ffffff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1;
-    transition: .5s;
-    box-shadow: 0 6px 10px 0 rgba(0, 0, 0, .14), 0 1px 18px 0 rgba(0, 0, 0, .12), 0 3px 5px -1px rgba(0, 0, 0, .2);
-    transform: translateY(-15px);
-    text-shadow: none;
-  }
-
-.circle.active {
-    background: #ff0000;
-}
-
-.circle:hover:not(.active) {
-    background: #c8c5c9;
-}
-
-#mic {
-color: #393636;
-font-size: 35px;
-transition: .9s;
-}
-
-/*Fine microphone*/
-
 /* Inizio upload button */
 
 button:focus {
@@ -323,31 +285,6 @@ button p {
     transition: .3s all ease;
 }
 
-/* button .fill {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    width: 0%;
-    background: #393636;
-    border-radius: 50px;
-}
-
-button .fa {
-    font-size: 25px;
-    color: white;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    line-height: 50px;
-    -webkit-transform: scale(0);
-    -ms-transform: scale(0);
-    transform: scale(0);
-} */
-
 #button-wrapper.clicked {
     padding: 0;
 }
@@ -383,7 +320,6 @@ button .fa {
 }
 
 /*Fine upload button*/
-
 
 
 /* Soundscape button inizio*/
@@ -545,10 +481,16 @@ button .fa {
     text-shadow: 2px 2px 10px rgb(10, 10, 10);
 }
 
-.player {
+.player-original {
     margin-left: auto;
     margin-right: auto;
     width: 8em
+}
+
+.player-result {
+    margin-left: auto;
+    margin-right: auto;
+    width: 8em;
 }
 
 .player-container{
@@ -562,7 +504,7 @@ button .fa {
 
 .player-panels {
     position: absolute;
-    top: 50%;
+    top: 80%;
     transform: translate(160px, -100%);
 }
 

@@ -3,13 +3,13 @@ import tempfile
 import queue
 import sys
 import sounddevice as sd
-import soundfile as sf 
-import numpy 
+import soundfile as sf
+import numpy
 import os
 
 # Recording functions
 def int_or_str(text):
-    """Helper function for argument parsing."""
+    '''Helper function for argument parsing.'''
     try:
         return int(text)
     except ValueError:

@@ -5,7 +5,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+        <link rel="stylesheet" href="{{ url_for("static", filename="css/main.css") }}">
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/greghub/green-audio-player/dist/css/green-audio-player.min.css">
 
         <!-- FONT -->
@@ -20,26 +20,34 @@
     <body>
         <div id="fixed-background"></div>
         <script>
-            document.getElementById("fixed-background").style.backgroundImage = 'url(../static/images/' + '{{ selected_soundscape }}' + '.jpg)'
+            document.getElementById("fixed-background").style.backgroundImage = "url(../static/images/" + "{{ selected_soundscape }}" + ".jpg)"
         </script>
         <header id="header-resynth">
             <div class="container">
-                <h1>SOUNDSCAPE</h1>
+                <h1><a href="{{ url_for("index") }}" style="text-decoration: none; color:white;">SOUNDSCAPE</a></h1>
                 <p id="subtitle">Hear Differently</p>
             </div>
         </header>
 
         <main>
             <article class="player-container">
-                <!--<form action="{{ url_for('index') }}" method="POST" id="index_form" enctype="multipart/form-data"></form>-->
+                <!--<form action="{{ url_for("index") }}" method="POST" id="index_form" enctype="multipart/form-data"></form>-->
 
                 <section class="player-panels">
 
+                    <h2>PLAY THE ORIGINAL AUDIO</h2>
+
+                    <div class="player-original">
+                        <audio crossorigin>
+                            <source src="{{ original_song }}" type="audio/wav">
+                        </audio>
+                    </div>
+
                     <h2>PLAY THE RESULT</h2>
 
-                    <div class="player">
-                        <audio>
-                            <source src='{{ resynth_song }}' type="audio/wav">
+                    <div class="player-result">
+                        <audio crossorigin>
+                            <source src="{{ resynth_song }}" type="audio/wav">
                         </audio>
                     </div>
 
@@ -48,7 +56,7 @@
             </article>
         </main>
 
-        <script type="module" src="{{ url_for('static', filename='js/player.js') }}"></script>
+        <script type="module" src="{{ url_for("static", filename="js/player.js") }}"></script>
         <script src="https://cdn.jsdelivr.net/gh/greghub/green-audio-player/dist/js/green-audio-player.min.js"></script>
     </body>
 </html>
