@@ -42,21 +42,27 @@ let update_bg = function () {
   var background = document.getElementById('dynamic-background');
   if (soundscape == 'sea') {
     background.style.backgroundImage = 'url(../static/images/sea.jpg)';
-    audio_sea.play();
-    audio_mountain.pause();
-    audio_pond.pause();
+    if (!muted) {
+      audio_sea.play();
+      audio_mountain.pause();
+      audio_pond.pause();
+    }
   }
   else if (soundscape == 'mountain') {
     background.style.backgroundImage = 'url(../static/images/mountain.jpg)';
-    audio_sea.pause();
-    audio_mountain.play();
-    audio_pond.pause();
+    if (!muted) {
+      audio_sea.pause();
+      audio_mountain.play();
+      audio_pond.pause();
+    }
   }
   else if (soundscape == 'pond') {
     background.style.backgroundImage = 'url(../static/images/pond.jpg)';
-    audio_sea.pause();
-    audio_mountain.pause();
-    audio_pond.play();
+    if (!muted) {
+      audio_sea.pause();
+      audio_mountain.pause();
+      audio_pond.play();
+    }
   }
 }
 
