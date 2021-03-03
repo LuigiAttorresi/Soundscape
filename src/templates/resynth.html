@@ -22,7 +22,7 @@
         <script>
             document.getElementById("fixed-background").style.backgroundImage = 'url(../static/images/' + '{{ selected_soundscape }}' + '.jpg)'
         </script>
-        <header>
+        <header id="header-resynth">
             <div class="container">
                 <h1>SOUNDSCAPE</h1>
                 <p id="subtitle">Hear Differently</p>
@@ -30,10 +30,10 @@
         </header>
 
         <main>
-            <article class="container">
+            <article class="player-container">
                 <form action="{{ url_for('index') }}" method="POST" id="index_form" enctype="multipart/form-data"></form>
 
-                <section id="panels">
+                <section class="player-panels">
 
                     <h2>PLAY THE RESULT</h2>
 
@@ -47,17 +47,6 @@
                 </section>
             </article>
         </main>
-
-        <footer>
-            <div class="footer">
-
-                <ul class="list-unstyled">
-                    <li><a href="https://github.com/LuigiAttorresi/Soundscape">Github repository</a></li>
-                    <li><a href="https://github.com/LuigiAttorresi/Soundscape">Join us</a></li>
-                </ul>
-
-            </div>
-        </footer>
 
         <script type="module" src="{{ url_for('static', filename='js/player.js') }}"></script>
         <script src="https://cdn.jsdelivr.net/gh/greghub/green-audio-player/dist/js/green-audio-player.min.js"></script>

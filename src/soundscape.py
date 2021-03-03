@@ -95,7 +95,7 @@ def index():
 
         soundfont_path = os.path.join(soundfont_folder, params.soundfont)
         bg_path = os.path.join(bg_folder, params.background)
-
+        """
 
     
         print('Starting separation...')
@@ -160,7 +160,7 @@ def index():
         # array_of_ints = np.array(np.asarray(background) * normalizer, dtype=np.int16)
         # filename = "background.wav"
         # wavfile.write(filename, 16000, array_of_ints)
-    
+        """
         return redirect(url_for('resynth'))
 
     audio_files = [f for f in os.listdir(audio_folder) if os.path.isfile(os.path.join(audio_folder, f)) and not f.startswith('.')]

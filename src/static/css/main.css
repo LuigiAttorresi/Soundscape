@@ -43,6 +43,7 @@
   width: 40px;
   height: 40px;
   margin: 20px;
+  margin-bottom: 0;
   border-radius: 100% ;
   box-shadow: 0 6px 10px 0 rgba(0, 0, 0, .14), 0 1px 18px 0 rgba(0, 0, 0, .12), 0 3px 5px -1px rgba(0, 0, 0, .2);
 }
@@ -73,7 +74,7 @@
     overflow: hidden;
 }
 
-html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, del, dfn, em, img, ins, kbd, q, samp, small, strong, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, table, tbody, tfoot, thead, tr, th, td, article, aside, footer, header, nav, section {
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, del, dfn, em, img, ins, kbd, q, samp, small, strong, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, table, tbody, tfoot, thead, tr, th, td, article, aside, header, nav, section {
     margin: 0;
     padding: 0;
     border: 0;
@@ -87,7 +88,12 @@ article > section > * + * {
     margin: 1.5em 0;
 }
 
+html, main {
+  height:70%;
+}
+
 body {
+    height: 100%;
     font-family: 'Source Code Pro', Courier, monospace;
     font-size: 14px;
     line-height: 1.5;
@@ -143,8 +149,10 @@ p {
     padding: 0 1em;
 }
 
-header, footer {
+header {
     padding: 2em;
+    padding-top: 0;
+    margin-top: 0;
 }
 
 .list-unstyled {
@@ -190,10 +198,6 @@ header, footer {
 
 h1:after, h2:after, h3:after, h4:after, h5:after, h6:after {
     background-color: #27AAE1;
-}
-
-footer {
-    border-top: 1px solid #f2f2f2;
 }
 
 #soundscapeSwipe {
@@ -491,15 +495,6 @@ button .fa {
 
 /* Soundscape button fine*/
 
-
-.footer {
-    height: 0.5em;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 #song-uploader {
     position: absolute;
     margin: 0;
@@ -542,3 +537,29 @@ button .fa {
     font-size: large;
     text-shadow: 2px 2px 10px rgb(10, 10, 10);
 }
+
+.player {
+    margin-left: auto;
+    margin-right: auto;
+    width: 8em
+}
+
+.player-container{
+    width: 50em;
+    height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 1em;
+    position: relative
+  }
+
+.player-panels {
+    position: absolute;              
+    top: 50%;       
+    transform: translate(160px, -100%);
+}
+
+#header-resynth {
+    margin-top: 60px;
+}
+
