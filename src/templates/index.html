@@ -110,11 +110,12 @@
                                 </div>
                                 <div><b>
                                     <div id="button-wrapper">
-                                        <button id="update-button">
+                                        <button id="update-button" class="btn-text-small" onchange='fileUploaded()'>
                                             <input name='uploaded_file' form='index_form' id='song-uploader' type='file' accept=".wav, .mp3" >
-                                            <p>Upload</p>
-                                            <div class="fill"></div>
-                                            <div class="fa fa-check"></div>
+                                            <!-- <div class="fill"></div>
+                                            <div class="fa fa-check"></div> -->
+                                            <p class="btn-text-small" id="file-not-uploaded">Upload</p>
+                                            <p class="btn-text-small" id="file-uploaded" style="display: none">Upload done!</p>
                                         </button>
                                     </div>
                                 </b></div>
@@ -126,11 +127,11 @@
                                                 <input type="hidden" name="media" value="audio" checked id='mediaAudio'/>
                                                 <input type='file' id='song-recorder' name='recorded_file' form='index_form' files=[] />
                                             </div>
-                                            <button class="btn btn-default"  id='gUMbtn'>Record</button>
+                                            <button class="btn-text-small" id='gUMbtn'>Record</button>
                                         </div>
                                         <div id='btns'>
-                                            <button  class="btn btn-default" id='start'>Start</button>
-                                            <button  class="btn btn-default" id='stop'>Stop</button>
+                                            <button  class="btn-text-small" id='start'>Start</button>
+                                            <button  class="btn-text-small" id='stop'>Stop</button>
                                         </div>
                                         <div>
                                             <ul  class="list-unstyled" id='ul'></ul>

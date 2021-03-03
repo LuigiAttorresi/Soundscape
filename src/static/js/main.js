@@ -190,13 +190,13 @@ function makeLink(){
     li.appendChild(mt);
     li.appendChild(hf);
     ul.appendChild(li);
-    
+
     let list = new DataTransfer();
     list.items.add(blob);
     let myFileList = list.files;
     id('song-recorder').files = myFileList;
     console.log(id('song-recorder').files[0]);
-    
+
     let recorded_file = id("song-recorder").files[0];
     let formDataRec = new FormData();
     formDataRec.append("recorded_file", recorded_file);
@@ -219,13 +219,13 @@ button = document.getElementById('update-button');
 
 parent = button.parentElement;
 
-button.addEventListener("click", function() {
-  parent.classList.add("clicked");
-  return setTimeout((function() {
-    uploadSong = true;
-    return parent.classList.add("success");
-  }), 2600);
-});
+// button.addEventListener("click", function() {
+//   parent.classList.add("clicked");
+//   return setTimeout((function() {
+//     uploadSong = true;
+//     return parent.classList.add("success");
+//   }), 2600);
+// });
 
 
 let uploaded_song = document.getElementById("song-uploader").files[0];
@@ -257,3 +257,11 @@ let muteUnmute = function() {
 }
 
 window.muteUnmute = muteUnmute;
+
+function fileUploaded() {
+    let file = document.getElementById("song-uploader");
+    document.getElementById("file-not-uploaded").style.display = 'none';
+    document.getElementById("file-uploaded").style.display = 'inherit';
+}
+
+window.fileUploaded = fileUploaded;

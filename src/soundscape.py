@@ -65,7 +65,7 @@ def index():
     bg_folder = os.path.join('backgrounds')
 
     if request.method == 'POST':
-        session['selected_song'] = request.form.get('sample_song_selection')
+        session['selected_song'] = request.form.get('sample_song_selection') + '.wav'
         session['selected_soundscape'] = request.form.get('soundscape_selection')
         modality = request.form.get('modality_selection')
         change_soundscape(session['selected_soundscape'])
@@ -109,8 +109,8 @@ def index():
         bg_path = os.path.join(bg_folder, params.background)
 
         if (modality == 'upload' or modality == 'record'):
-            print('Pretty Cool')
-            """ print('Starting separation...')
+            print('Pretty cool stuff...')
+            print('Starting separation...')
             separation.separate(audio_file_name)
             print('Separation done!')
             vocals, _= separation.get_stem_array(audio_file_name,'vocals')
@@ -186,9 +186,10 @@ def resynth():
     if (modality == 'upload' or modality == 'record'):
         resynth_song = '../static/audio/soundscape.wav'
     else:
-        resynth_song = os.path.join(STATIC_DIR, 'audio', session['selected_song'])
+        resynth_song = os.path.join('..', 'static', 'audio', 'samples', session['selected_song'])
+        print(resynth_song)
 
-    return render_template('resynth.html', resynth_song = resynth, selected_soundscape = session['selected_soundscape'])
+    return render_template('resynth.html', resynth_song = resynth_song, selected_soundscape = session['selected_soundscape'])
 
 @app.route('/favicon.ico')
 def favicon():
