@@ -319,6 +319,19 @@ button p {
     transition: .3s all ease .3s;
 }
 
+#gUMbtn {
+  height: 50px;
+}
+
+#start {
+  height: 50px;
+}
+
+#stop {
+  height: 50px;
+}
+
+
 /*Fine upload button*/
 
 
@@ -514,4 +527,8 @@ button p {
 
 #song-recorder {
   display: none;
+}
+
+#update-button {
+  width: 224px;
 }
