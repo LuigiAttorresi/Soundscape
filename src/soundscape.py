@@ -143,7 +143,7 @@ def index():
 
             if drums_present:                                                             #Scommentare da Mac
                 new_drums = resynthesis.drum_resynth(drum_path, soundfont_path)           #Scommentare da Mac
-            
+
             else:
                 new_drums = resynthesis.adjust_length(drums, audio_length)
 
@@ -168,21 +168,22 @@ def index():
             filename = 'soundscape.wav'
             wavfile.write(os.path.join(STATIC_DIR, 'audio', 'results',filename), 16000, array_of_ints)
 
-            # if len(other.shape) == 2:
-            #     other = other[0]
-            #
-            # normalizer = float(np.iinfo(np.int16).max)
-            # array_of_ints = np.array(np.asarray(other) * normalizer, dtype=np.int16)
-            # filename = 'other.wav'
-            # wavfile.write(filename, 16000, array_of_ints)
-            #
-            # if len(background.shape) == 2:
-            #     background = background[0]
-            #
-            # normalizer = float(np.iinfo(np.int16).max)
-            # array_of_ints = np.array(np.asarray(background) * normalizer, dtype=np.int16)
-            # filename = 'background.wav'
-            # wavfile.write(filename, 16000, array_of_ints) '''
+            if len(other.shape) == 2:
+                other = other[0]
+
+            normalizer = float(np.iinfo(np.int16).max)
+            array_of_ints = np.array(np.asarray(other) * normalizer, dtype=np.int16)
+            filename = 'other.wav'
+            wavfile.write(filename, 16000, array_of_ints)
+
+            if len(background.shape) == 2:
+                background = background[0]
+
+            normalizer = float(np.iinfo(np.int16).max)
+            array_of_ints = np.array(np.asarray(background) * normalizer, dtype=np.int16)
+            filename = 'background.wav'
+            wavfile.write(filename, 16000, array_of_ints)
+
         return redirect(url_for('resynth'))
 
     sample_folder = os.path.join(audio_folder, 'samples')
@@ -216,31 +217,3 @@ def favicon():
 if __name__ == '__main__':
 
     app.run(debug=True)
-
-
-
-''' CITE SPLEETER
-@article{spleeter2020,
-  doi = {10.21105/joss.02154},
-  url = {https://doi.org/10.21105/joss.02154},
-  year = {2020},
-  publisher = {The Open Journal},
-  volume = {5},
-  number = {50},
-  pages = {2154},
-  author = {Romain Hennequin and Anis Khlif and Felix Voituret and Manuel Moussallam},
-  title = {Spleeter: a fast and efficient music source separation tool with pre-trained models},
-  journal = {Journal of Open Source Software},
-  note = {Deezer Research}
-}
-'''
-''' CITE DDSP
-@inproceedings{
-  engel2020ddsp,
-  title={DDSP: Differentiable Digital Signal Processing},
-  author={Jesse Engel and Lamtharn (Hanoi) Hantrakul and Chenjie Gu and Adam Roberts},
-  booktitle={International Conference on Learning Representations},
-  year={2020},
-  url={https://openreview.net/forum?id=B1x1ma4tDr}
-}
-'''
