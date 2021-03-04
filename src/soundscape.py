@@ -131,12 +131,21 @@ def index():
                 new_vocals = resynthesis.resynth(vocals, params.vocal_parameters)
                 audio_length = len(new_vocals)
 
+            else:
+                new_vocals = resynthesis.adjust_length(vocals, audio_length)
+
             if bass_present:
                 new_bass = resynthesis.resynth(bass, params.bass_parameters)
                 audio_length = len(new_bass)
 
+            else:
+                new_bass = resynthesis.adjust_length(bass, audio_length)
+
             if drums_present:                                                             #Scommentare da Mac
                 new_drums = resynthesis.drum_resynth(drum_path, soundfont_path)           #Scommentare da Mac
+            
+            else:
+                new_drums = resynthesis.adjust_length(drums, audio_length)
 
             if vocals_present or bass_present or drums_present:
                 background = resynthesis.generate_background(bg_path, audio_length)
