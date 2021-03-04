@@ -40,6 +40,21 @@ The percussive part is resynthesized trying to match each drum sound with the mo
 The percussive sound analyisis and classification regard four types of sounds: Hi-hat, Kick, Snare and Clap.
 For each soundscape a soundfont was created, containing a series of different sounds belonging to it with different envelopes in order to cover as many percussive sounds as possible, then a randomization of similar soundfont sounds is performed to obtain variety.
 
+## Local installation instructions:
+```bash
+# Create python virtual environment and activate it:
+py -m venv soundscape-venv
+.\soundscape-venv\Scripts\activate
+# Install dependencies and download required data:
+pip install -U pip
+pip install cython
+pip install numpy
+pip install -r requirements.txt
+omnizart download-checkpoints
+```
+
+Substitute  ``soundscape-venv\Lib\site-packages\omnizart\drum\labels.py`` and ``soundscape-venv\Lib\site-packages\ddsp\colab\colab_utils.py`` with the provided ``labels.py`` and ``colab_utils.py`` files.
+
 ## Notes
 This application was developed as a project for the "Creative Programming and Computing" course at [Politecnico di Milano](https://www.polimi.it/en/) (MSc in Music and Acoustic Engineering).
 
